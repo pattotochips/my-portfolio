@@ -21,6 +21,7 @@ import {
   Calculate as CalculateIcon,
   Handshake as SettleIcon,
   GitHub as GitHubIcon,
+  OpenInNew as OpenInNewIcon,
   ArrowBack as BackIcon,
 } from '@mui/icons-material';
 
@@ -131,6 +132,7 @@ const floatKeyframes = {
 };
 
 const GITHUB_URL = 'https://github.com/pattotochips/expense-splitter';
+const LIVE_URL = 'https://papaya-pie-7204f0.netlify.app/';
 
 const ExpenseSplitterLanding = () => {
   const navigate = useNavigate();
@@ -270,8 +272,8 @@ const ExpenseSplitterLanding = () => {
             <Button
               variant="contained"
               size="large"
-              startIcon={<GitHubIcon />}
-              href={GITHUB_URL}
+              startIcon={<OpenInNewIcon />}
+              href={LIVE_URL}
               target="_blank"
               rel="noopener noreferrer"
               sx={{
@@ -291,7 +293,33 @@ const ExpenseSplitterLanding = () => {
                 },
               }}
             >
-              View on GitHub
+              Try it Live
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<GitHubIcon />}
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                py: 1.8,
+                px: 5,
+                textTransform: 'none',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                borderColor: 'rgba(255,255,255,0.2)',
+                color: 'rgba(255,255,255,0.8)',
+                borderRadius: 3,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  borderColor: 'rgba(255,255,255,0.4)',
+                  background: 'rgba(255,255,255,0.05)',
+                  transform: 'translateY(-2px)',
+                },
+              }}
+            >
+              View Source
             </Button>
           </Stack>
         </Container>
@@ -470,40 +498,68 @@ const ExpenseSplitterLanding = () => {
             fontWeight={700}
             sx={{ color: 'white', mb: 2, fontSize: { xs: '1.5rem', md: '2rem' } }}
           >
-            Check out the source
+            Ready to split some expenses?
           </Typography>
           <Typography
             variant="body1"
             sx={{ color: 'rgba(255,255,255,0.5)', mb: 4 }}
           >
-            Explore the full codebase on GitHub, including Firebase integration and the balance calculation algorithm.
+            Try the live app or explore the full codebase on GitHub.
           </Typography>
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<GitHubIcon />}
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{
-              py: 1.8,
-              px: 5,
-              textTransform: 'none',
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              background: 'linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%)',
-              borderRadius: 3,
-              boxShadow: '0 4px 20px rgba(108, 92, 231, 0.4)',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                background: 'linear-gradient(135deg, #00CEC9 0%, #6C5CE7 100%)',
-                transform: 'translateY(-2px)',
-                boxShadow: '0 8px 30px rgba(108, 92, 231, 0.6)',
-              },
-            }}
-          >
-            View on GitHub
-          </Button>
+          <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" useFlexGap>
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<OpenInNewIcon />}
+              href={LIVE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                py: 1.8,
+                px: 5,
+                textTransform: 'none',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                background: 'linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%)',
+                borderRadius: 3,
+                boxShadow: '0 4px 20px rgba(108, 92, 231, 0.4)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #00CEC9 0%, #6C5CE7 100%)',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 8px 30px rgba(108, 92, 231, 0.6)',
+                },
+              }}
+            >
+              Try it Live
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<GitHubIcon />}
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                py: 1.8,
+                px: 5,
+                textTransform: 'none',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                borderColor: 'rgba(255,255,255,0.2)',
+                color: 'rgba(255,255,255,0.8)',
+                borderRadius: 3,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  borderColor: 'rgba(255,255,255,0.4)',
+                  background: 'rgba(255,255,255,0.05)',
+                  transform: 'translateY(-2px)',
+                },
+              }}
+            >
+              View Source
+            </Button>
+          </Stack>
           <Typography
             variant="caption"
             display="block"

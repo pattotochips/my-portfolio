@@ -21,6 +21,7 @@ import {
   Visibility as ViewIcon,
   Send as SendIcon,
   GitHub as GitHubIcon,
+  OpenInNew as OpenInNewIcon,
   ArrowBack as BackIcon,
 } from '@mui/icons-material';
 
@@ -131,6 +132,7 @@ const floatKeyframes = {
 };
 
 const GITHUB_URL = 'https://github.com/pattotochips/OOO-generator';
+const LIVE_URL = 'https://ooo-generator.netlify.app/';
 
 const OOOGeneratorLanding = () => {
   const navigate = useNavigate();
@@ -270,8 +272,8 @@ const OOOGeneratorLanding = () => {
             <Button
               variant="contained"
               size="large"
-              startIcon={<GitHubIcon />}
-              href={GITHUB_URL}
+              startIcon={<OpenInNewIcon />}
+              href={LIVE_URL}
               target="_blank"
               rel="noopener noreferrer"
               sx={{
@@ -292,7 +294,33 @@ const OOOGeneratorLanding = () => {
                 },
               }}
             >
-              View on GitHub
+              Try it Live
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<GitHubIcon />}
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                py: 1.8,
+                px: 5,
+                textTransform: 'none',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                borderColor: 'rgba(255,255,255,0.2)',
+                color: 'rgba(255,255,255,0.8)',
+                borderRadius: 3,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  borderColor: 'rgba(255,255,255,0.4)',
+                  background: 'rgba(255,255,255,0.05)',
+                  transform: 'translateY(-2px)',
+                },
+              }}
+            >
+              View Source
             </Button>
           </Stack>
         </Container>
@@ -477,35 +505,63 @@ const OOOGeneratorLanding = () => {
             variant="body1"
             sx={{ color: 'rgba(255,255,255,0.5)', mb: 4 }}
           >
-            Explore the codebase, pixel art styling, procedural audio engine, and 81 tests on GitHub.
+            Try the live app or explore the codebase on GitHub.
           </Typography>
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<GitHubIcon />}
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{
-              py: 1.8,
-              px: 5,
-              textTransform: 'none',
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              background: 'linear-gradient(135deg, #0077A8 0%, #F5D78E 100%)',
-              borderRadius: 3,
-              color: '#0a0e27',
-              boxShadow: '0 4px 20px rgba(0, 119, 168, 0.4)',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                background: 'linear-gradient(135deg, #F5D78E 0%, #0077A8 100%)',
-                transform: 'translateY(-2px)',
-                boxShadow: '0 8px 30px rgba(0, 119, 168, 0.6)',
-              },
-            }}
-          >
-            View on GitHub
-          </Button>
+          <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" useFlexGap>
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<OpenInNewIcon />}
+              href={LIVE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                py: 1.8,
+                px: 5,
+                textTransform: 'none',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                background: 'linear-gradient(135deg, #0077A8 0%, #F5D78E 100%)',
+                borderRadius: 3,
+                color: '#0a0e27',
+                boxShadow: '0 4px 20px rgba(0, 119, 168, 0.4)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #F5D78E 0%, #0077A8 100%)',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 8px 30px rgba(0, 119, 168, 0.6)',
+                },
+              }}
+            >
+              Try it Live
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<GitHubIcon />}
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                py: 1.8,
+                px: 5,
+                textTransform: 'none',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                borderColor: 'rgba(255,255,255,0.2)',
+                color: 'rgba(255,255,255,0.8)',
+                borderRadius: 3,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  borderColor: 'rgba(255,255,255,0.4)',
+                  background: 'rgba(255,255,255,0.05)',
+                  transform: 'translateY(-2px)',
+                },
+              }}
+            >
+              View Source
+            </Button>
+          </Stack>
           <Typography
             variant="caption"
             display="block"
