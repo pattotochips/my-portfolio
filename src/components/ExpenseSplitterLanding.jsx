@@ -20,7 +20,6 @@ import {
   PersonAdd as PersonAddIcon,
   Calculate as CalculateIcon,
   Handshake as SettleIcon,
-  GitHub as GitHubIcon,
   OpenInNew as OpenInNewIcon,
   ArrowBack as BackIcon,
 } from '@mui/icons-material';
@@ -131,7 +130,6 @@ const floatKeyframes = {
   },
 };
 
-const GITHUB_URL = 'https://github.com/pattotochips/expense-splitter';
 const LIVE_URL = 'https://papaya-pie-7204f0.netlify.app/';
 
 const ExpenseSplitterLanding = () => {
@@ -294,32 +292,6 @@ const ExpenseSplitterLanding = () => {
               }}
             >
               Try it Live
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
-              startIcon={<GitHubIcon />}
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                py: 1.8,
-                px: 5,
-                textTransform: 'none',
-                fontSize: '1.1rem',
-                fontWeight: 600,
-                borderColor: 'rgba(255,255,255,0.2)',
-                color: 'rgba(255,255,255,0.8)',
-                borderRadius: 3,
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  borderColor: 'rgba(255,255,255,0.4)',
-                  background: 'rgba(255,255,255,0.05)',
-                  transform: 'translateY(-2px)',
-                },
-              }}
-            >
-              View Source
             </Button>
           </Stack>
         </Container>
@@ -532,32 +504,6 @@ const ExpenseSplitterLanding = () => {
               }}
             >
               Try it Live
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
-              startIcon={<GitHubIcon />}
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                py: 1.8,
-                px: 5,
-                textTransform: 'none',
-                fontSize: '1.1rem',
-                fontWeight: 600,
-                borderColor: 'rgba(255,255,255,0.2)',
-                color: 'rgba(255,255,255,0.8)',
-                borderRadius: 3,
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  borderColor: 'rgba(255,255,255,0.4)',
-                  background: 'rgba(255,255,255,0.05)',
-                  transform: 'translateY(-2px)',
-                },
-              }}
-            >
-              View Source
             </Button>
           </Stack>
           <Typography

@@ -107,6 +107,9 @@ const PortfolioHome = () => {
                 <Card
                   elevation={0}
                   sx={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
                     background: 'rgba(255, 255, 255, 0.05)',
                     backdropFilter: 'blur(10px)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -123,7 +126,7 @@ const PortfolioHome = () => {
                     },
                   }}
                 >
-                  <CardActionArea onClick={() => navigate(project.route)}>
+                  <CardActionArea onClick={() => navigate(project.route)} sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
                     {/* Project thumbnail */}
                     <Box sx={{
                       height: 180,
