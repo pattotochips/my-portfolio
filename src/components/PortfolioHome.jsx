@@ -27,6 +27,7 @@ import {
   Email as EmailIcon,
   Description as ResumeIcon,
   Verified as TestedIcon,
+  PlayCircleOutline as LiveIcon,
   Work as WorkIcon,
   School as SchoolIcon,
   Place as PlaceIcon,
@@ -51,17 +52,19 @@ const projects = [
     gradient: brandGradient,
     route: '/face-filter',
     repo: repos.faceFilter,
+    hasDemo: true,
   },
   {
     id: 'expense-splitter',
     title: 'Expense Splitter',
     description:
-      'Shared-expense tracker for groups. Firebase Auth for identity, Firestore listeners so balances update across devices without a refresh, and balances derived from the expense list rather than stored as a counter that can drift.',
+      'Shared-expense tracker for groups. Firebase Auth, balances derived from the expense list rather than stored, and a settle-up plan that greedily matches debtors to creditors so a group settles in as few transfers as possible.',
     icon: <ReceiptIcon sx={{ fontSize: 72, color: 'white', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.3))' }} />,
     tags: ['React 18', 'Firebase', 'Firestore', 'MUI 6'],
     gradient: 'linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%)',
     route: '/expense-splitter',
     repo: repos.expenseSplitter,
+    hasDemo: true,
   },
   {
     id: 'ooo-generator',
@@ -73,6 +76,7 @@ const projects = [
     gradient: 'linear-gradient(135deg, #0077A8 0%, #F5D78E 100%)',
     route: '/ooo-generator',
     repo: repos.oooGenerator,
+    hasDemo: true,
     tested: 'Jest + RTL',
   },
   {
@@ -109,6 +113,7 @@ const projects = [
     route: '/wikitrail',
     repo: repos.wikiTrail,
     badge: 'Extension',
+    hasDemo: true,
   },
   {
     id: 'inkmark',
@@ -392,8 +397,23 @@ const PortfolioHome = () => {
                         />
                       </Stack>
 
-                      {(project.badge || project.tested) && (
+                      {(project.badge || project.tested || project.hasDemo) && (
                         <Stack direction="row" flexWrap="wrap" gap={0.7} sx={{ mb: 1.5 }}>
+                          {project.hasDemo && (
+                            <Chip
+                              icon={<LiveIcon />}
+                              label="Live demo"
+                              size="small"
+                              sx={{
+                                fontSize: '0.7rem',
+                                fontWeight: 700,
+                                background: 'rgba(102, 187, 106, 0.16)',
+                                border: '1px solid rgba(102, 187, 106, 0.5)',
+                                color: '#a5d6a7',
+                                '& .MuiChip-icon': { color: '#a5d6a7', fontSize: 14 },
+                              }}
+                            />
+                          )}
                           {project.badge && (
                             <Chip
                               label={project.badge}

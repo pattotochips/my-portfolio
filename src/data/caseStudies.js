@@ -64,14 +64,15 @@ export const caseStudies = {
     context:
       'A shared-expenses tracker for groups — trips, flatmates, recurring dinners. Someone pays, everyone else owes a slice, and the app keeps the running answer to "who owes whom".',
     problem: [
-      'The hard part of splitting expenses is not arithmetic, it is agreement. Several people add entries from different devices at the same time, and everyone needs to see the same balances immediately or they stop trusting the number.',
-      'It also has to be usable across currencies, and it has to answer the settle-up question directly rather than dumping a ledger and leaving people to do subtraction.',
+      'The hard part of splitting expenses is not arithmetic, it is agreement. Everyone has to see the same number and believe it, which means the balance can never contradict the entries it came from.',
+      'It also has to answer the question people actually have. A ledger and a set of balances still leaves six people working out who pays whom — the useful output is the shortest list of transfers that clears the group.',
+      'And membership is awkward: you invite people who do not have an account yet, so there is no user ID to attach them to.',
     ],
     approach: [
       {
-        title: 'Firestore listeners as the sync layer',
+        title: 'Settle-up plan, not just balances',
         detail:
-          'Rather than fetch-on-mount plus manual refresh, the client subscribes to its groups and expenses. A write from one member propagates to every other open device without a refresh, which is what makes the shared balance believable.',
+          'Knowing that A is down 500 and B is up 500 still leaves everyone working out who pays whom. Debtors and creditors are sorted by magnitude and greedily matched largest against largest, so a group of six settles in as few transfers as possible instead of everyone paying everyone.',
       },
       {
         title: 'Balances derived, never stored',
@@ -79,14 +80,19 @@ export const caseStudies = {
           'Balances are computed from the expense list on read instead of being maintained as a counter. A stored total can drift out of sync with the entries that produced it; a derived one cannot.',
       },
       {
-        title: 'Firebase Auth for identity',
+        title: 'Email as the member identifier',
         detail:
-          'Group membership keys off Firebase Auth user IDs, so authorization rules live next to the data in Firestore rules rather than in client code that could be bypassed.',
+          'Members are keyed by email rather than Firebase UID, which is what makes it possible to invite someone who has not signed up. The invite is stored as pending; on first signup a sweep finds every invite for that address and adds the member to each group with arrayUnion.',
       },
       {
-        title: 'Groups as the unit of scope',
+        title: 'Balance logic as pure functions',
         detail:
-          'Everything — expenses, members, balances — hangs off a group. That keeps queries narrow and makes the mental model match how people actually use it: one group per trip or household.',
+          'balances.js takes expenses and members and returns balances and settlements — no Firestore, no React, no side effects. The most consequential code in the app is also the easiest part of it to reason about and test in isolation.',
+      },
+      {
+        title: 'Flat collections over subcollections',
+        detail:
+          'Expenses are queried with where("groupId", "==", id) rather than nested under a group document, which keeps the dashboard cross-group aggregation to one query per collection instead of a fan-out per group.',
       },
     ],
     tradeoffs: [
@@ -96,7 +102,11 @@ export const caseStudies = {
       },
       {
         choice: 'Computing balances client-side',
-        why: 'Always consistent with the underlying data and trivial to reason about. It would need to move server-side or become an aggregate for a group with thousands of expenses.',
+        why: 'Always consistent with the underlying data and trivial to reason about. It would need to move server-side or become a stored aggregate for a group with thousands of expenses.',
+      },
+      {
+        choice: 'Fetch on mount rather than live listeners',
+        why: 'Simpler, and it keeps read volume predictable on the free tier. The cost is real though: a second member\u2019s expense does not appear until you reload, which undercuts the shared-ledger premise.',
       },
       {
         choice: 'Multi-currency without live FX rates',
@@ -104,9 +114,11 @@ export const caseStudies = {
       },
     ],
     learnings: [
-      'Add a settle-up suggestion that minimizes the number of transfers — the balance list answers "what do I owe", not "what is the fewest payments that clears this".',
+      'Move to Firestore onSnapshot listeners. Data is currently fetched once per screen with getDocs, so another member adding an expense needs a reload to appear — the biggest gap between what this is and a genuinely shared ledger.',
       'Write the Firestore security rules test suite first. Rules are the actual authorization layer, so untested rules are untested auth.',
       'Support offline entry with optimistic writes. People add expenses in restaurants and taxis, which is exactly where connectivity fails.',
+      'Replace the leftover create-react-app placeholder test. balances.js is pure and carries the most important logic in the app, so it should not be the untested part.',
+      'Support unequal splits — shares are even across selected members, which covers most cases and not the ones people argue about.',
     ],
   },
 
@@ -362,10 +374,10 @@ export const caseStudies = {
       'Make the session boundary adaptive — infer it from the gap distribution rather than hardcoding thirty minutes.',
       'Add optional encrypted sync. The privacy default is right, but losing every trail when you change laptop is a real cost.',
       'Publish to the Chrome Web Store. "Load unpacked" limits this to people who already clone repositories.',
-      'Enable GitHub Pages on the repo — sample-trail.html is a self-contained interactive demo that currently 404s from the README.',
+      'Add a guided tour to the exported HTML so a first-time viewer knows to drag, zoom and click rather than having to discover it.',
     ],
     noDemo:
-      'Browser extensions cannot be demoed on a web page. The repo ships sample-trail.html — a pre-baked interactive trail (Coffee → Battle of Waterloo) that opens in any browser with no install.',
+      'The extension itself cannot run on a web page, so what is linked is the next best thing: a real exported trail, served as a self-contained interactive page. Same zoom, drag and hover as the dashboard, with no install.',
   },
 
   inkmark: {

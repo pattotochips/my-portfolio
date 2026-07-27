@@ -29,6 +29,10 @@ import { caseStudies } from '../data/caseStudies';
 import { repos } from '../data/profile';
 import { glassCard, gradientText as makeGradientText, pageBackground, text, focusRing } from '../styles/shared';
 
+// The extension itself cannot be demoed in a browser, but the repo's exported
+// sample trail is a self-contained interactive page served from GitHub Pages.
+const SAMPLE_TRAIL_URL = 'https://pattotochips.github.io/WikiTrail/sample-trail.html';
+
 const accent = 'linear-gradient(135deg, #7F7FD5 0%, #86A8E7 50%, #91EAE4 100%)';
 const accentHover = 'linear-gradient(135deg, #91EAE4 0%, #7F7FD5 100%)';
 const gradientText = makeGradientText(accent);
@@ -184,12 +188,14 @@ const WikiTrailLanding = () => {
               }}
             />
             <ProjectLinks
+              liveUrl={SAMPLE_TRAIL_URL}
+              liveLabel="Open Interactive Demo"
               sourceUrl={repos.wikiTrail}
               sourceLabel="View Source"
               gradient={accent}
               gradientHover={accentHover}
               contrastText="#141833"
-              note="The repo ships sample-trail.html — a pre-baked interactive trail (Coffee → Battle of Waterloo) that opens in any browser with nothing installed."
+              note="A real exported trail — Coffee → Battle of Waterloo. Drag nodes, scroll to zoom, click to inspect. No extension needed."
             />
           </Stack>
         </Container>
@@ -398,6 +404,8 @@ const WikiTrailLanding = () => {
             README walks through both.
           </Typography>
           <ProjectLinks
+            liveUrl={SAMPLE_TRAIL_URL}
+            liveLabel="Open Interactive Demo"
             sourceUrl={repos.wikiTrail}
             sourceLabel="View on GitHub"
             gradient={accent}
