@@ -20,10 +20,12 @@ import {
   Visibility as VisionIcon,
   Speed as SpeedIcon,
   ArrowBack as BackIcon,
+  GitHub as GitHubIcon,
 } from '@mui/icons-material';
 import CaseStudy from './CaseStudy';
 import ProjectLinks from './ProjectLinks';
 import SiteFooter from './SiteFooter';
+import MediaSlot from './MediaSlot';
 import { caseStudies } from '../data/caseStudies';
 import { repos } from '../data/profile';
 import { glassCard, gradientText as makeGradientText, text, focusRing } from '../styles/shared';
@@ -427,6 +429,55 @@ const DemoLanding = () => {
         </Container>
       </Box>
 
+      {/* DEMO MEDIA */}
+      <Box component="section" aria-labelledby="media-heading" sx={{ py: { xs: 6, md: 8 }, position: 'relative', zIndex: 1 }}>
+        <Container maxWidth="lg">
+          <Typography
+            id="media-heading"
+            variant="h3"
+            component="h2"
+            fontWeight={700}
+            textAlign="center"
+            sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
+          >
+            See it running
+          </Typography>
+          <Typography
+            variant="body1"
+            textAlign="center"
+            sx={{ color: text.muted, mb: 5, maxWidth: 560, mx: 'auto', lineHeight: 1.8 }}
+          >
+            The live demo needs camera permission, so here is what it looks like first.
+          </Typography>
+          <Stack spacing={3} alignItems="center">
+            <MediaSlot
+              file="face-filter-santa.gif"
+              caption="Santa hat and beard tracking a face in real time"
+              gradient={accent}
+              maxWidth={760}
+            />
+            <Grid container spacing={3}>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <MediaSlot
+                  file="face-filter-game.gif"
+                  caption="Hand-gesture game mode picking a winner"
+                  gradient={accent}
+                  maxWidth="100%"
+                />
+              </Grid>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <MediaSlot
+                  file="face-filter-settings.png"
+                  caption="Operator console — filters, snow, ads and the sequencer"
+                  gradient={accent}
+                  maxWidth="100%"
+                />
+              </Grid>
+            </Grid>
+          </Stack>
+        </Container>
+      </Box>
+
       {/* CASE STUDY */}
       <CaseStudy study={caseStudies['face-filter']} gradient={accent} />
 
@@ -502,6 +553,83 @@ const DemoLanding = () => {
             gradientHover={accentHover}
             note="Requires camera access. Works best in Chrome or Edge."
           />
+        </Container>
+      </Box>
+
+      {/* RELATED EXPERIMENT */}
+      <Box component="section" aria-labelledby="related-heading" sx={{ py: { xs: 6, md: 8 }, position: 'relative', zIndex: 1 }}>
+        <Container maxWidth="md">
+          <Typography
+            id="related-heading"
+            variant="h3"
+            component="h2"
+            fontWeight={700}
+            textAlign="center"
+            sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
+          >
+            Related experiment
+          </Typography>
+          <Typography
+            variant="body1"
+            textAlign="center"
+            sx={{ color: text.muted, mb: 4, maxWidth: 580, mx: 'auto', lineHeight: 1.8 }}
+          >
+            Before building the filters from landmarks directly, I explored what a commercial AR SDK
+            gives you out of the box.
+          </Typography>
+          <Card elevation={0} sx={{ ...glassCard, '&:hover': { transform: 'none' } }}>
+            <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+              <Typography variant="h6" component="h3" fontWeight={700} sx={{ color: text.primary, mb: 1.5 }}>
+                DeepAR Demo
+              </Typography>
+              <Typography variant="body2" sx={{ color: text.muted, lineHeight: 1.85, mb: 2.5 }}>
+                A web app built on the DeepAR Web SDK with 19+ pre-built effects — face decorations,
+                makeup looks, emotion detection, background replacement, character transforms, and two
+                interactive games — behind a carousel selector, bundled with webpack.
+                <br /><br />
+                The contrast is the point. DeepAR hands you polished effects immediately, but the
+                tracking and rendering are a black box you configure rather than control. The Face
+                Filter app above is the opposite trade: MediaPipe gives raw landmarks and everything
+                on top — smoothing, anchoring, compositing, the game loop — is mine to build and to
+                tune. Going through the SDK first is what made clear which of those decisions actually
+                mattered.
+              </Typography>
+              <Stack direction="row" flexWrap="wrap" gap={0.8} sx={{ mb: 3 }}>
+                {['DeepAR Web SDK', 'Webpack', 'JavaScript', '19+ effects'].map((tag) => (
+                  <Chip
+                    key={tag}
+                    label={tag}
+                    size="small"
+                    sx={{
+                      fontSize: '0.72rem',
+                      fontWeight: 600,
+                      background: 'rgba(255, 255, 255, 0.08)',
+                      border: '1px solid rgba(255, 255, 255, 0.14)',
+                      color: text.secondary,
+                    }}
+                  />
+                ))}
+              </Stack>
+              <Button
+                startIcon={<GitHubIcon />}
+                href={repos.deepAr}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  color: text.secondary,
+                  border: '1px solid rgba(255,255,255,0.22)',
+                  borderRadius: 2,
+                  px: 2,
+                  '&:hover': { color: text.primary, background: 'rgba(255,255,255,0.07)' },
+                  ...focusRing,
+                }}
+              >
+                deep-ar-demo on GitHub
+              </Button>
+            </CardContent>
+          </Card>
         </Container>
       </Box>
 

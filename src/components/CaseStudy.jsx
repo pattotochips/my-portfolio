@@ -15,6 +15,7 @@ import {
   Balance as TradeoffIcon,
   TrendingUp as NextIcon,
   CheckCircleOutline as TestedIcon,
+  InfoOutlined as InfoIcon,
 } from '@mui/icons-material';
 import { glassCard, gradientText, text } from '../styles/shared';
 
@@ -79,6 +80,43 @@ const CaseStudy = ({ study, gradient }) => {
         >
           {study.context}
         </Typography>
+
+        {/* Some projects genuinely cannot be demoed on a web page — an
+            extension, a desktop app, a service needing keys and a database.
+            Say why, rather than leaving a conspicuous missing button. */}
+        {study.noDemo && (
+          <Card
+            elevation={0}
+            sx={{
+              maxWidth: 780,
+              mx: 'auto',
+              mb: 6,
+              background: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255,255,255,0.12)',
+              borderLeft: '3px solid',
+              borderLeftColor: '#90caf9',
+              borderRadius: 2,
+            }}
+          >
+            <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
+              <Stack direction="row" spacing={1.5} alignItems="flex-start">
+                <InfoIcon aria-hidden="true" sx={{ color: '#90caf9', fontSize: 20, mt: 0.25 }} />
+                <Box>
+                  <Typography
+                    variant="subtitle2"
+                    fontWeight={700}
+                    sx={{ color: text.secondary, mb: 0.5 }}
+                  >
+                    Why there is no hosted demo
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: text.muted, lineHeight: 1.8 }}>
+                    {study.noDemo}
+                  </Typography>
+                </Box>
+              </Stack>
+            </CardContent>
+          </Card>
+        )}
 
         <Grid container spacing={3}>
           {/* The problem */}

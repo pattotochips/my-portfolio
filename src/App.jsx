@@ -11,6 +11,10 @@ const DemoLanding = lazy(() => import('./components/DemoLanding'));
 const ExpenseSplitterLanding = lazy(() => import('./components/ExpenseSplitterLanding'));
 const OOOGeneratorLanding = lazy(() => import('./components/OOOGeneratorLanding'));
 const BirthdayBotLanding = lazy(() => import('./components/BirthdayBotLanding'));
+const HRQueryEngineLanding = lazy(() => import('./components/HRQueryEngineLanding'));
+const WikiTrailLanding = lazy(() => import('./components/WikiTrailLanding'));
+const InkmarkLanding = lazy(() => import('./components/InkmarkLanding'));
+const TravisFilterLanding = lazy(() => import('./components/TravisFilterLanding'));
 const FaceFilterApp = lazy(() => import('./components/FaceFilterApp'));
 
 const theme = createTheme({
@@ -80,6 +84,10 @@ function App() {
               <Route path="/expense-splitter" element={<ExpenseSplitterLanding />} />
               <Route path="/ooo-generator" element={<OOOGeneratorLanding />} />
               <Route path="/birthday-bot" element={<BirthdayBotLanding />} />
+              <Route path="/hr-query-engine" element={<HRQueryEngineLanding />} />
+              <Route path="/wikitrail" element={<WikiTrailLanding />} />
+              <Route path="/inkmark" element={<InkmarkLanding />} />
+              <Route path="/travis-filter" element={<TravisFilterLanding />} />
               <Route path="/face-filter/app" element={<FaceFilterApp />} />
               {/* GitHub Pages serves 404.html for unknown paths; the router lands
                   here and sends the visitor home rather than showing a blank page. */}

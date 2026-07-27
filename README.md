@@ -13,15 +13,28 @@ trade-offs that were actually made, and what I'd do differently — rather than 
 
 ## Projects
 
-| Project | What it is | Live | Source |
-|---|---|---|---|
-| **Face Filter App** | Real-time AI face filters over a live camera feed. Three MediaPipe models in one render loop, positional smoothing, snow particles, a hand-gesture game, and a drag-and-drop sequencer. | [Demo](https://pattotochips.github.io/my-portfolio/face-filter) | This repo |
-| **Expense Splitter** | Shared-expense tracker. Firebase Auth, Firestore listeners for cross-device sync, balances derived from the expense list rather than stored. | [Live](https://papaya-pie-7204f0.netlify.app/) | [Repo](https://github.com/pattotochips/expense-splitter) |
-| **OOO Generator** | Pixel-art Out of Office generator. Four tones that restructure the message, deterministic generation with no model call, chiptune loop synthesized at runtime. Tested with Jest + RTL. | [Live](https://ooo-generator.netlify.app/) | [Repo](https://github.com/pattotochips/OOO-generator) |
-| **Birthday Reminder Bot** | Discord bot taking reminders by chat command. Relative and absolute scheduling, timezone-aware dates, per-user timer tracking. | Self-hosted | [Repo](https://github.com/pattotochips/bot) |
+Eight projects, each with its own landing page and case study.
 
-The Face Filter app is the only project whose source lives in this repository; the other three link
-out to their own repos.
+| Project | What it is | Kind | Live | Source |
+|---|---|---|---|---|
+| **HR Query Engine** | Hybrid AI employee search. GPT splits a natural-language query into meaning and hard constraints; Weaviate handles semantic similarity, PostgreSQL enforces the filters. Embedding cache bounds API cost. | Backend | — | [Backend](https://github.com/pattotochips/HR-Query-Engine---Backend) · [Frontend](https://github.com/pattotochips/HR-Query-Engine--Frontend) |
+| **Face Filter App** | Real-time AI face filters over a live camera feed. Three MediaPipe models in one render loop, positional smoothing, snow particles, a hand-gesture game, and a drag-and-drop sequencer. | Web app | [Demo](https://pattotochips.github.io/my-portfolio/face-filter) | [Repo](https://github.com/pattotochips/face-filter-app) |
+| **WikiTrail** | Browser extension mapping your Wikipedia rabbit holes as an interactive D3 graph. Dwell time sets node size, per-tab sessions, annotations, three export formats. | Extension | — | [Repo](https://github.com/pattotochips/WikiTrail) |
+| **Inkmark** | Persistent web highlighter with inline notes. The real problem is re-anchoring a highlight after the page is rebuilt — solved with XPath anchored to the nearest stable id. Zero dependencies. | Extension | — | [Repo](https://github.com/pattotochips/inkmark) |
+| **Expense Splitter** | Shared-expense tracker. Firebase Auth, Firestore listeners for cross-device sync, balances derived from the expense list rather than stored. | Web app | [Live](https://papaya-pie-7204f0.netlify.app/) | [Repo](https://github.com/pattotochips/expense-splitter) |
+| **OOO Generator** | Pixel-art Out of Office generator. Four tones that restructure the message, deterministic generation with no model call, chiptune loop synthesized at runtime. Tested with Jest + RTL. | Web app | [Live](https://ooo-generator.netlify.app/) | [Repo](https://github.com/pattotochips/OOO-generator) |
+| **Travis Filter** | Desktop video filter — silhouette segmentation composited over procedural neon stripes. Morphological mask refinement plus temporal smoothing to stop the outline flickering. Ships as a binary. | Desktop | — | [Repo](https://github.com/pattotochips/travis-filter) |
+| **Birthday Reminder Bot** | Discord bot taking reminders by chat command. Relative and absolute scheduling, timezone-aware dates, per-user timer tracking. | Bot | — | [Repo](https://github.com/pattotochips/bot) |
+
+Not every project can have a hosted demo — an extension cannot run on a web page, a desktop OpenCV
+app needs a local webcam, and the HR engine needs PostgreSQL, Weaviate and an API key. Those pages
+say so explicitly and lead with architecture, code, and install steps instead of a dead button.
+
+[deep-ar-demo](https://github.com/pattotochips/deep-ar-demo) is covered as a related experiment on
+the Face Filter page, since the two are worth reading against each other — a commercial AR SDK
+versus building the same effects from raw landmarks.
+
+No project's source lives in this repository except the portfolio itself; every card links out.
 
 ---
 
@@ -94,6 +107,32 @@ src/
 
 `profile.js` and `caseStudies.js` are the content layer — updating a job, a skill, or a case study
 means editing data, not components.
+
+---
+
+## Pending media
+
+Screenshots and GIFs are wired up but not yet captured. Each slot renders a labelled dashed frame at
+the correct aspect ratio; drop the file into `public/media/` and set `ready` on that `MediaSlot` to
+go live. Nothing else needs to change — sizing, lazy-loading and alt text are already in place.
+
+| File | Page | Shows |
+|---|---|---|
+| `face-filter-santa.gif` | Face Filter | Santa hat and beard tracking a face live |
+| `face-filter-game.gif` | Face Filter | Hand-gesture game picking a winner |
+| `face-filter-settings.png` | Face Filter | Operator console and sequencer |
+| `hr-query-engine-search.png` | HR Query Engine | Search UI with query and ranked results |
+| `wikitrail-graph.png` | WikiTrail | Dashboard — sidebar, graph, detail panel |
+| `wikitrail-trail.gif` | WikiTrail | A trail building while browsing |
+| `inkmark-highlight.gif` | Inkmark | Selecting text and picking a colour |
+| `inkmark-dashboard.png` | Inkmark | Highlights grouped by site, with search |
+| `travis-filter-stripes.gif` | Travis Filter | Mode 0 — tinted silhouette over stripes |
+| `travis-filter-infrared.gif` | Travis Filter | Mode 1 — infrared silhouette |
+| `expense-splitter-groups.png` | Expense Splitter | Group view with expenses and balances |
+| `expense-splitter-balance.png` | Expense Splitter | Settle-up balances across members |
+| `ooo-generator-app.png` | OOO Generator | Generator with live preview |
+| `ooo-generator-tones.gif` | OOO Generator | Switching tone, message restructures |
+| `birthday-bot-discord.png` | Birthday Bot | Adding a reminder and the announcement |
 
 ---
 

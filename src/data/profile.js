@@ -153,7 +153,14 @@ export const education = [
 
 export const repos = {
   portfolio: 'https://github.com/pattotochips/my-portfolio',
+  faceFilter: 'https://github.com/pattotochips/face-filter-app',
   expenseSplitter: 'https://github.com/pattotochips/expense-splitter',
   oooGenerator: 'https://github.com/pattotochips/OOO-generator',
   birthdayBot: 'https://github.com/pattotochips/bot',
+  hrBackend: 'https://github.com/pattotochips/HR-Query-Engine---Backend',
+  hrFrontend: 'https://github.com/pattotochips/HR-Query-Engine--Frontend',
+  wikiTrail: 'https://github.com/pattotochips/WikiTrail',
+  inkmark: 'https://github.com/pattotochips/inkmark',
+  travisFilter: 'https://github.com/pattotochips/travis-filter',
+  deepAr: 'https://github.com/pattotochips/deep-ar-demo',
 };

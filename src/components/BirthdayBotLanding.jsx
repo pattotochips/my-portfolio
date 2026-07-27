@@ -23,6 +23,7 @@ import {
 import CaseStudy from './CaseStudy';
 import ProjectLinks from './ProjectLinks';
 import SiteFooter from './SiteFooter';
+import MediaSlot from './MediaSlot';
 import { caseStudies } from '../data/caseStudies';
 import { repos } from '../data/profile';
 import { glassCard, gradientText, pageBackground, text, focusRing } from '../styles/shared';
@@ -293,6 +294,29 @@ const BirthdayBotLanding = () => {
               </Grid>
             ))}
           </Grid>
+        </Container>
+      </Box>
+
+      {/* SCREENSHOTS */}
+      <Box component="section" aria-labelledby="media-heading" sx={{ py: { xs: 6, md: 8 }, position: 'relative', zIndex: 1 }}>
+        <Container maxWidth="lg">
+          <Typography
+            id="media-heading"
+            variant="h3"
+            component="h2"
+            fontWeight={700}
+            textAlign="center"
+            sx={{ ...gradientText(accent), mb: 5, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
+          >
+            Screenshots
+          </Typography>
+          <Stack spacing={3} alignItems="center">
+            <MediaSlot
+              file="birthday-bot-discord.png"
+              caption="Adding a reminder and the bot announcing it in-channel"
+              gradient={accent}
+            />
+          </Stack>
         </Container>
       </Box>
 

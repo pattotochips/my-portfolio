@@ -18,6 +18,10 @@ import {
   ReceiptLong as ReceiptIcon,
   BeachAccess as BeachIcon,
   Cake as CakeIcon,
+  Psychology as SemanticIcon,
+  AccountTree as GraphIcon,
+  BorderColor as HighlightIcon,
+  Person as SilhouetteIcon,
   GitHub as GitHubIcon,
   LinkedIn as LinkedInIcon,
   Email as EmailIcon,
@@ -46,7 +50,7 @@ const projects = [
     tags: ['React 19', 'MediaPipe', 'Canvas API', 'MUI 7'],
     gradient: brandGradient,
     route: '/face-filter',
-    repo: repos.portfolio,
+    repo: repos.faceFilter,
   },
   {
     id: 'expense-splitter',
@@ -81,6 +85,54 @@ const projects = [
     gradient: 'linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%)',
     route: '/birthday-bot',
     repo: repos.birthdayBot,
+  },
+  {
+    id: 'hr-query-engine',
+    title: 'HR Query Engine',
+    description:
+      'Hybrid AI employee search. GPT splits a natural-language query into meaning and hard constraints; Weaviate handles semantic similarity while PostgreSQL enforces the filters. Embedding cache keeps API cost bounded.',
+    icon: <SemanticIcon sx={{ fontSize: 72, color: 'white', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.3))' }} />,
+    tags: ['TypeScript', 'Weaviate', 'PostgreSQL', 'OpenAI'],
+    gradient: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+    route: '/hr-query-engine',
+    repo: repos.hrBackend,
+    badge: 'Backend',
+  },
+  {
+    id: 'wikitrail',
+    title: 'WikiTrail',
+    description:
+      'Browser extension that records your Wikipedia rabbit holes and renders each as an interactive D3 graph. Dwell time sets node size, per-tab sessions, annotations, and three export formats.',
+    icon: <GraphIcon sx={{ fontSize: 72, color: 'white', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.3))' }} />,
+    tags: ['Manifest V3', 'D3 v7', 'Vanilla JS', '5 browsers'],
+    gradient: 'linear-gradient(135deg, #7F7FD5 0%, #86A8E7 50%, #91EAE4 100%)',
+    route: '/wikitrail',
+    repo: repos.wikiTrail,
+    badge: 'Extension',
+  },
+  {
+    id: 'inkmark',
+    title: 'Inkmark',
+    description:
+      'Persistent web highlighter in four colours with inline notes. The real problem is re-anchoring a highlight after the page is rebuilt — solved with XPath anchored to the nearest stable id. Zero dependencies.',
+    icon: <HighlightIcon sx={{ fontSize: 68, color: '#3b2a12', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.25))' }} />,
+    tags: ['Manifest V3', 'Vanilla JS', 'XPath', '0 deps'],
+    gradient: 'linear-gradient(135deg, #F6D365 0%, #FDA085 100%)',
+    route: '/inkmark',
+    repo: repos.inkmark,
+    badge: 'Extension',
+  },
+  {
+    id: 'travis-filter',
+    title: 'Travis Filter',
+    description:
+      'Desktop real-time video filter — silhouette segmentation composited over procedural neon stripes. Morphological mask refinement plus temporal smoothing to stop the outline flickering. Ships as a binary.',
+    icon: <SilhouetteIcon sx={{ fontSize: 72, color: 'white', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.3))' }} />,
+    tags: ['Python', 'OpenCV', 'MediaPipe', 'PyInstaller'],
+    gradient: 'linear-gradient(135deg, #AC2BFF 0%, #FF2BD1 100%)',
+    route: '/travis-filter',
+    repo: repos.travisFilter,
+    badge: 'Desktop',
   },
 ];
 
@@ -340,22 +392,38 @@ const PortfolioHome = () => {
                         />
                       </Stack>
 
-                      {project.tested && (
-                        <Chip
-                          icon={<TestedIcon />}
-                          label={`Tested · ${project.tested}`}
-                          size="small"
-                          sx={{
-                            alignSelf: 'flex-start',
-                            mb: 1.5,
-                            fontSize: '0.72rem',
-                            fontWeight: 700,
-                            background: 'rgba(67, 233, 123, 0.14)',
-                            border: '1px solid rgba(67, 233, 123, 0.45)',
-                            color: '#7ef0a8',
-                            '& .MuiChip-icon': { color: '#7ef0a8', fontSize: 15 },
-                          }}
-                        />
+                      {(project.badge || project.tested) && (
+                        <Stack direction="row" flexWrap="wrap" gap={0.7} sx={{ mb: 1.5 }}>
+                          {project.badge && (
+                            <Chip
+                              label={project.badge}
+                              size="small"
+                              sx={{
+                                fontSize: '0.7rem',
+                                fontWeight: 700,
+                                letterSpacing: '0.03em',
+                                background: 'rgba(144, 202, 249, 0.16)',
+                                border: '1px solid rgba(144, 202, 249, 0.45)',
+                                color: '#bbdefb',
+                              }}
+                            />
+                          )}
+                          {project.tested && (
+                            <Chip
+                              icon={<TestedIcon />}
+                              label={`Tested · ${project.tested}`}
+                              size="small"
+                              sx={{
+                                fontSize: '0.7rem',
+                                fontWeight: 700,
+                                background: 'rgba(67, 233, 123, 0.14)',
+                                border: '1px solid rgba(67, 233, 123, 0.45)',
+                                color: '#7ef0a8',
+                                '& .MuiChip-icon': { color: '#7ef0a8', fontSize: 15 },
+                              }}
+                            />
+                          )}
+                        </Stack>
                       )}
 
                       <Typography

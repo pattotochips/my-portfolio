@@ -26,6 +26,7 @@ import {
 import CaseStudy from './CaseStudy';
 import ProjectLinks from './ProjectLinks';
 import SiteFooter from './SiteFooter';
+import MediaSlot from './MediaSlot';
 import { caseStudies } from '../data/caseStudies';
 import { repos } from '../data/profile';
 import { glassCard, gradientText as makeGradientText, text, focusRing } from '../styles/shared';
@@ -397,6 +398,42 @@ const OOOGeneratorLanding = () => {
               </Grid>
             ))}
           </Grid>
+        </Container>
+      </Box>
+
+      {/* SCREENSHOTS */}
+      <Box component="section" aria-labelledby="media-heading" sx={{ py: { xs: 6, md: 8 }, position: 'relative', zIndex: 1 }}>
+        <Container maxWidth="lg">
+          <Typography
+            id="media-heading"
+            variant="h3"
+            component="h2"
+            fontWeight={700}
+            textAlign="center"
+            sx={{ ...gradientText, mb: 5, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
+          >
+            Screenshots
+          </Typography>
+          <Stack spacing={3} alignItems="center">
+            <Grid container spacing={3}>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <MediaSlot
+                  file="ooo-generator-app.png"
+                  caption="Pixel-art generator with live message preview"
+                  gradient={accent}
+                  maxWidth="100%"
+                />
+              </Grid>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <MediaSlot
+                  file="ooo-generator-tones.gif"
+                  caption="Switching tone and watching the message restructure"
+                  gradient={accent}
+                  maxWidth="100%"
+                />
+              </Grid>
+            </Grid>
+          </Stack>
         </Container>
       </Box>
 
