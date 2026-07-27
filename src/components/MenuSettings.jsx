@@ -60,6 +60,8 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
+const assetBase = import.meta.env.BASE_URL + 'assets/';
+
 const MenuSettings = ({ settings, onSettingsChange, onStartVideo }) => {
   const [localSettings, setLocalSettings] = useState(settings);
   const [uploadedFiles, setUploadedFiles] = useState({
@@ -521,7 +523,7 @@ const MenuSettings = ({ settings, onSettingsChange, onStartVideo }) => {
                 }}>
                   <Box
                     component="img"
-                    src={localSettings.santa.hatImage ? URL.createObjectURL(localSettings.santa.hatImage) : '/assets/santa-hat.png'}
+                    src={localSettings.santa.hatImage ? URL.createObjectURL(localSettings.santa.hatImage) : `${assetBase}santa-hat.webp`}
                     alt="Santa Hat Preview"
                     sx={{
                       width: 80,
@@ -581,7 +583,7 @@ const MenuSettings = ({ settings, onSettingsChange, onStartVideo }) => {
                 }}>
                   <Box
                     component="img"
-                    src={localSettings.santa.elfHatImage ? URL.createObjectURL(localSettings.santa.elfHatImage) : '/assets/elf-hat.png'}
+                    src={localSettings.santa.elfHatImage ? URL.createObjectURL(localSettings.santa.elfHatImage) : `${assetBase}elf-hat.webp`}
                     alt="Elf Hat Preview"
                     sx={{
                       width: 80,
@@ -641,7 +643,7 @@ const MenuSettings = ({ settings, onSettingsChange, onStartVideo }) => {
                 }}>
                   <Box
                     component="img"
-                    src={localSettings.santa.beardImage ? URL.createObjectURL(localSettings.santa.beardImage) : '/assets/santa-beard.png'}
+                    src={localSettings.santa.beardImage ? URL.createObjectURL(localSettings.santa.beardImage) : `${assetBase}santa-beard.webp`}
                     alt="Santa Beard Preview"
                     sx={{
                       width: 80,

@@ -15,6 +15,8 @@ import {
   People as PeopleIcon,
 } from "@mui/icons-material";
 
+const assetBase = import.meta.env.BASE_URL + 'assets/';
+
 const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -33,7 +35,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
   const [showToolbar, setShowToolbar] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
   const videoUrlRef = useRef(null);
-  const [snowflakes, setSnowflakes] = useState([]);
+  const [, setSnowflakes] = useState([]);
   const snowflakesRef = useRef([]);
   const [snowPileHeight, setSnowPileHeight] = useState(0);
   
@@ -47,7 +49,6 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
   // App sequence state
   const [sequenceActive, setSequenceActive] = useState(false);
   const [currentSequenceIndex, setCurrentSequenceIndex] = useState(0);
-  const [sequenceTimer, setSequenceTimer] = useState(null);
   const sequenceTimeoutRef = useRef(null);
   const santaHatImageRef = useRef(null);
   const santaBeardImageRef = useRef(null);
@@ -69,19 +70,18 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
   const [raisedHandPlayers, setRaisedHandPlayers] = useState([]);
   const [arrowPosition, setArrowPosition] = useState(null);
   const [smoothArrowPosition, setSmoothArrowPosition] = useState(null);
-  const [winner, setWinner] = useState(null);
+  const [, setWinner] = useState(null);
   const [confetti, setConfetti] = useState([]);
-  const [currentLoopCount, setCurrentLoopCount] = useState(0);
+  const [, setCurrentLoopCount] = useState(0);
   const [tickerPosition, setTickerPosition] = useState(100);
   const currentLoopCountRef = useRef(0);
-  const [videoStartTime, setVideoStartTime] = useState(null);
+  const [, setVideoStartTime] = useState(null);
   const videoTimerRef = useRef(null);
   const [canStartGame, setCanStartGame] = useState(false);
   const webglCanvasRef = useRef(null);
   const glContextRef = useRef(null);
   const webglProgramRef = useRef(null);
   const landmarkHistoryRef = useRef([]);
-  const [smoothedLandmarks, setSmoothedLandmarks] = useState(null);
 
   // Use settings directly instead of state to ensure they stay in sync
   const videoDuration = settings.ads.duration;
@@ -345,7 +345,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
       };
     } else {
       const hatImg = new Image();
-      hatImg.src = "/assets/santa-hat.png";
+      hatImg.src = `${assetBase}santa-hat.webp`;
       hatImg.onload = () => {
         santaHatImageRef.current = hatImg;
       };
@@ -367,7 +367,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
       };
     } else {
       const elfHatImg = new Image();
-      elfHatImg.src = "/assets/elf-hat.png";
+      elfHatImg.src = `${assetBase}elf-hat.webp`;
       elfHatImg.onload = () => {
         elfHatImageRef.current = elfHatImg;
       };
@@ -389,7 +389,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
       };
     } else {
       const beardImg = new Image();
-      beardImg.src = "/assets/santa-beard.png";
+      beardImg.src = `${assetBase}santa-beard.webp`;
       beardImg.onload = () => {
         santaBeardImageRef.current = beardImg;
       };
@@ -400,7 +400,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
 
     // Load Santa outfit
     const outfitImg = new Image();
-    outfitImg.src = "/assets/santa-outfit.png";
+    outfitImg.src = `${assetBase}santa-outfit.webp`;
     outfitImg.onload = () => {
       santaOutfitImageRef.current = outfitImg;
     };
@@ -410,7 +410,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
 
     // Load Santa sledge
     const sledgeImg = new Image();
-    sledgeImg.src = "/assets/santa-sledge.png";
+    sledgeImg.src = `${assetBase}santa-sledge.webp`;
     sledgeImg.onload = () => {
       santaSledgeImageRef.current = sledgeImg;
     };
@@ -420,7 +420,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
 
     // Load snow image
     const snowImg = new Image();
-    snowImg.src = "/assets/snow.png";
+    snowImg.src = `${assetBase}snow.webp`;
     snowImg.onload = () => {
       snowImageRef.current = snowImg;
     };
@@ -431,7 +431,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
 
     // Load snow pile image
     const snowPileImg = new Image();
-    snowPileImg.src = "/assets/snow-pile.png";
+    snowPileImg.src = `${assetBase}snow-pile.webp`;
     snowPileImg.onload = () => {
       snowPileImageRef.current = snowPileImg;
     };
@@ -442,7 +442,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
 
     // Load tree outfit image
     const treeOutfitImg = new Image();
-    treeOutfitImg.src = "/assets/tree-outfit.png";
+    treeOutfitImg.src = `${assetBase}tree-outfit.webp`;
     treeOutfitImg.onload = () => {
       treeOutfitImageRef.current = treeOutfitImg;
     };
@@ -453,7 +453,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
 
     // Load game arrow image
     const gameArrowImg = new Image();
-    gameArrowImg.src = "/assets/game-arrow.png";
+    gameArrowImg.src = `${assetBase}game-arrow.webp`;
     gameArrowImg.onload = () => {
       gameArrowImageRef.current = gameArrowImg;
     };
@@ -812,6 +812,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
   let verticalOffset = 0;
   let horizontalOffset = 0;
 
+  // eslint-disable-next-line no-unused-vars -- parked: only caller was the removed placeholder filter block
   const drawLineBackground = (ctx, width, height) => {
     const now = Date.now();
 
@@ -962,167 +963,6 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
         }
       }
 
-      // Additional filter processing can be added here
-      if (false) { // Placeholder for future filters
-        const width = canvas.width;
-        const height = canvas.height;
-
-        // ---------------------------
-        // STEP 1: CREATE SILHOUETTE MASK
-        // ---------------------------
-        if (!window.silhouetteMaskCanvas) {
-          window.silhouetteMaskCanvas = document.createElement('canvas');
-        }
-        const maskCanvas = window.silhouetteMaskCanvas;
-        maskCanvas.width = width;
-        maskCanvas.height = height;
-        const maskCtx = maskCanvas.getContext('2d');
-
-        // CLEAR first
-        maskCtx.clearRect(0, 0, width, height);
-
-        // Draw video with heavy blur to create smooth solid mask
-        maskCtx.filter = 'blur(12px)';
-        maskCtx.drawImage(video, 0, 0, width, height);
-        maskCtx.filter = 'none';
-
-        // Get pixel data and create binary alpha mask
-        const maskData = maskCtx.getImageData(0, 0, width, height);
-        const pixels = maskData.data;
-        const threshold = 90;
-
-        for (let i = 0; i < pixels.length; i += 4) {
-          const r = pixels[i];
-          const g = pixels[i + 1];
-          const b = pixels[i + 2];
-          const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-
-          // Create mask: white with varying alpha
-          const isSilhouette = luminance < threshold;
-          pixels[i] = 255;
-          pixels[i + 1] = 255;
-          pixels[i + 2] = 255;
-          pixels[i + 3] = isSilhouette ? 255 : 0;
-        }
-
-        maskCtx.putImageData(maskData, 0, 0);
-
-        // Apply ONE more blur to smooth the alpha edges
-        maskCtx.globalCompositeOperation = 'source-over';
-        maskCtx.filter = 'blur(6px)';
-        maskCtx.drawImage(maskCanvas, 0, 0);
-        maskCtx.filter = 'none';
-
-        // ---------------------------
-        // STEP 2: DRAW TINTED SILHOUETTES (bottom layer)
-        // ---------------------------
-
-        // Get tint color
-        if (!window.currentTint || Date.now() > window.nextTintChangeTime) {
-          window.currentTint = SILHOUETTE_TINTS[Math.floor(Math.random() * SILHOUETTE_TINTS.length)];
-          window.nextTintChangeTime = Date.now() + 2000;
-        }
-        const tint = window.currentTint;
-
-        // Create tinted silhouette in temp canvas
-        if (!window.silhouetteCanvas) {
-          window.silhouetteCanvas = document.createElement('canvas');
-        }
-        const silCanvas = window.silhouetteCanvas;
-        silCanvas.width = width;
-        silCanvas.height = height;
-        const silCtx = silCanvas.getContext('2d');
-
-        // CLEAR
-        silCtx.clearRect(0, 0, width, height);
-        silCtx.globalCompositeOperation = 'source-over';
-
-        // Draw video
-        silCtx.drawImage(video, 0, 0, width, height);
-
-        // Apply tint
-        silCtx.globalCompositeOperation = 'multiply';
-        silCtx.fillStyle = `rgb(${tint.r}, ${tint.g}, ${tint.b})`;
-        silCtx.fillRect(0, 0, width, height);
-
-        silCtx.globalCompositeOperation = 'lighter';
-        silCtx.fillStyle = `rgba(${tint.r}, ${tint.g}, ${tint.b}, 0.5)`;
-        silCtx.fillRect(0, 0, width, height);
-
-        // Cut out silhouette shape using mask
-        silCtx.globalCompositeOperation = 'destination-in';
-        silCtx.drawImage(maskCanvas, 0, 0);
-
-        // Reset and draw tinted silhouettes to main canvas
-        silCtx.globalCompositeOperation = 'source-over';
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.drawImage(silCanvas, 0, 0);
-
-        // ---------------------------
-        // STEP 3: DRAW LINES WITH HOLES CUT OUT (top layer)
-        // ---------------------------
-
-        // Create lines layer in temp canvas
-        if (!window.linesCanvas) {
-          window.linesCanvas = document.createElement('canvas');
-        }
-        const linesCanvas = window.linesCanvas;
-        linesCanvas.width = width;
-        linesCanvas.height = height;
-        const linesCtx = linesCanvas.getContext('2d', { alpha: true });
-
-        // CLEAR
-        linesCtx.clearRect(0, 0, width, height);
-        linesCtx.globalCompositeOperation = 'source-over';
-
-        // Draw lines background
-        drawLineBackground(linesCtx, width, height);
-
-        // CUT OUT holes where silhouettes are - mask alpha determines what's removed
-        linesCtx.globalCompositeOperation = 'destination-out';
-        linesCtx.drawImage(maskCanvas, 0, 0);
-
-        // Reset and draw lines (with holes) over silhouettes
-        linesCtx.globalCompositeOperation = 'source-over';
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.drawImage(linesCanvas, 0, 0);
-
-        // ---------------------------
-        // STEP 4: DRAW WHITE OUTLINES
-        // ---------------------------
-
-        // Create outline from mask edge
-        if (!window.outlineCanvas) {
-          window.outlineCanvas = document.createElement('canvas');
-        }
-        const outlineCanvas = window.outlineCanvas;
-        outlineCanvas.width = width;
-        outlineCanvas.height = height;
-        const outlineCtx = outlineCanvas.getContext('2d');
-
-        // CLEAR
-        outlineCtx.clearRect(0, 0, width, height);
-        outlineCtx.globalCompositeOperation = 'source-over';
-
-        // Dilated mask
-        outlineCtx.filter = 'blur(3px)';
-        outlineCtx.drawImage(maskCanvas, 0, 0);
-        outlineCtx.filter = 'none';
-
-        // Remove original to leave edge
-        outlineCtx.globalCompositeOperation = 'destination-out';
-        outlineCtx.drawImage(maskCanvas, 0, 0);
-
-        // Make edge white
-        outlineCtx.globalCompositeOperation = 'source-in';
-        outlineCtx.fillStyle = 'white';
-        outlineCtx.fillRect(0, 0, width, height);
-
-        // Reset and draw outline
-        outlineCtx.globalCompositeOperation = 'source-over';
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.drawImage(outlineCanvas, 0, 0);
-      }
 
       if (hasFaces && !isGameMode && smoothedFaceLandmarks) {
         // Use smoothed landmarks for stable filter rendering
@@ -1151,7 +991,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
 
       // Draw people counter if enabled
       if (showCounter) {
-        drawPeopleCounter(ctx, canvas.width, canvas.height);
+        drawPeopleCounter(ctx);
       }
 
       animationFrameRef.current = requestAnimationFrame(detect);
@@ -1308,7 +1148,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
     }
   }, [selectedFilter, detectFaces, isLoading, faceLandmarker]);
 
-  const drawFilter = (ctx, landmarks, width, height, poseLandmarks = null) => {
+  const drawFilter = (ctx, landmarks, width, height) => {
     const leftEye = landmarks[33];
     const rightEye = landmarks[263];
     const noseTip = landmarks[1];
@@ -1401,7 +1241,6 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
     ctx.save();
 
     // Get face center and dimensions
-    const noseTip = landmarks[1]; // Nose tip landmark
     const leftEye = landmarks[33]; // Left eye outer corner
     const rightEye = landmarks[263]; // Right eye outer corner
     const chin = landmarks[152]; // Chin point
@@ -1409,7 +1248,6 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
 
     // Calculate face dimensions and position
     const faceWidth = Math.abs((rightEye.x - leftEye.x) * width);
-    const faceHeight = Math.abs((chin.y - forehead.y) * height);
     
     // Calculate the center of the entire face (not just nose)
     const faceCenterX = ((leftEye.x + rightEye.x) / 2) * width;
@@ -1448,31 +1286,37 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
 
     // Determine position based on settings
     switch (position) {
-      case "nose":
+      case "nose": {
         const nose = landmarks[1];
         x = nose.x * width;
         y = nose.y * height;
         break;
-      case "head":
+      }
+      case "head": {
         const forehead = landmarks[10];
         x = forehead.x * width;
         y = forehead.y * height - height * 0.1;
         break;
-      case "eyes":
+      }
+      case "eyes": {
         const leftEye = landmarks[33];
         const rightEye = landmarks[263];
         x = ((leftEye.x + rightEye.x) / 2) * width;
         y = ((leftEye.y + rightEye.y) / 2) * height;
         break;
-      case "mouth":
+      }
+      case "mouth": {
         const mouth = landmarks[13];
         x = mouth.x * width;
         y = mouth.y * height;
         break;
-      default: // face
+      }
+      default: {
+        // face
         const center = landmarks[1];
         x = center.x * width;
         y = center.y * height;
+      }
     }
 
     ctx.save();
@@ -1505,6 +1349,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
     ctx.restore();
   };
 
+  // eslint-disable-next-line no-unused-vars -- parked: pose-driven Santa outfit is disabled at its call site, not removed
   const drawSantaOutfit = (ctx, faceLandmarks, width, height, poseLandmarks = null) => {
     if (!santaOutfitImageRef.current) return;
 
@@ -1515,8 +1360,6 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
       // Landmark indices: 11 = left shoulder, 12 = right shoulder, 23 = left hip, 24 = right hip
       const leftShoulder = poseLandmarks[11];
       const rightShoulder = poseLandmarks[12];
-      const leftHip = poseLandmarks[23];
-      const rightHip = poseLandmarks[24];
 
       // Calculate center point between shoulders
       centerX = ((leftShoulder.x + rightShoulder.x) / 2) * width;
@@ -1568,7 +1411,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
     const stayDuration = 3000; // 3 seconds
     
     // Create a simple face ID based on approximate position
-    faceLandmarks.forEach((face, index) => {
+    faceLandmarks.forEach((face) => {
       if (face && face.length > 0) {
         const centerX = face[1]?.x || face[0]?.x || 0; // Nose tip or first landmark
         const centerY = face[1]?.y || face[0]?.y || 0;
@@ -1601,8 +1444,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
     entriesToDelete.forEach(id => faceTrackingRef.current.delete(id));
   };
 
-  const drawPeopleCounter = (ctx, width, height) => {
-    const padding = 20;
+  const drawPeopleCounter = (ctx) => {
     const text = `People: ${peopleCount}`;
     
     ctx.save();
@@ -1640,6 +1482,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
     setCounterTimeout(timeout);
   };
 
+  // eslint-disable-next-line no-unused-vars -- parked: no UI control wired to it yet
   const resetCounter = () => {
     peopleCountRef.current = 0;
     setPeopleCount(0);
@@ -1700,6 +1543,7 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
     ctx.putImageData(imageData, 0, 0);
   };
 
+  // eslint-disable-next-line no-unused-vars -- parked: WebGL filter kept for the next filter pass
   const applyNegative3FilterWebGL = (ctx, width, height) => {
     const gl = glContextRef.current;
     const program = webglProgramRef.current;
@@ -2211,14 +2055,11 @@ const VideoScreen = ({ settings, onSettingsChange, onBackToMenu, startMode }) =>
 
   const handleFilterChange = (event, newFilter) => {
     if (newFilter !== null) {
-      // Epilepsy warning can be added for future filters that need it
-      if (false) {
-        setShowEpilepsyWarning(true);
-      }
       setSelectedFilter(newFilter);
     }
   };
 
+  // eslint-disable-next-line no-unused-vars -- parked: manual game start, currently automatic-only
   const handleStartGame = () => {
     if (canStartGame && gameState === "waiting" && raisedHandPlayers.length >= 2) {
       setGameState("joining");

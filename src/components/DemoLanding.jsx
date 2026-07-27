@@ -19,31 +19,21 @@ import {
   CameraAlt as CameraIcon,
   Visibility as VisionIcon,
   Speed as SpeedIcon,
-  PlayArrow as PlayIcon,
+  ArrowBack as BackIcon,
 } from '@mui/icons-material';
+import CaseStudy from './CaseStudy';
+import ProjectLinks from './ProjectLinks';
+import SiteFooter from './SiteFooter';
+import { caseStudies } from '../data/caseStudies';
+import { repos } from '../data/profile';
+import { glassCard, gradientText as makeGradientText, text, focusRing } from '../styles/shared';
 
 const assetBase = import.meta.env.BASE_URL + 'assets/';
 
-const glassCard = {
-  background: 'rgba(255, 255, 255, 0.05)',
-  backdropFilter: 'blur(10px)',
-  border: '1px solid rgba(255, 255, 255, 0.1)',
-  borderRadius: 3,
-  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-  transition: 'all 0.3s ease',
-  '&:hover': {
-    background: 'rgba(255, 255, 255, 0.08)',
-    transform: 'translateY(-4px)',
-    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4)',
-  },
-};
+const accent = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+const accentHover = 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)';
 
-const gradientText = {
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  backgroundClip: 'text',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-};
+const gradientText = makeGradientText(accent);
 
 const features = [
   {
@@ -51,28 +41,28 @@ const features = [
     title: 'Santa Filter',
     description: 'Real-time Santa hat and beard overlay with multi-face support and smooth landmark tracking.',
     gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    image: 'santa-hat.png',
+    image: 'santa-hat.webp',
   },
   {
     icon: <TreeIcon />,
     title: 'Tree Costume',
     description: 'Full Christmas tree outfit with intelligent face-hole positioning that tracks head movement.',
     gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-    image: 'tree-outfit.png',
+    image: 'tree-outfit.webp',
   },
   {
     icon: <SnowIcon />,
     title: 'Snow Effects',
     description: 'Image-based particle system with realistic physics, configurable speed, and snow pile accumulation.',
     gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    image: 'snow.png',
+    image: 'snow.webp',
   },
   {
     icon: <GamesIcon />,
     title: 'Game Mode',
     description: 'Interactive hand-gesture game with automatic detection, countdown timer, and winner selection.',
     gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-    image: 'game-arrow.png',
+    image: 'game-arrow.webp',
   },
 {
     icon: <SequenceIcon />,
@@ -128,6 +118,20 @@ const floatKeyframes = {
   },
 };
 
+/**
+ * Decorative snow, generated once at module load. Randomising these inside the
+ * render body is impure and makes the snow jump on every re-render.
+ */
+const snowflakes = Array.from({ length: 30 }, (_, id) => ({
+  id,
+  size: 4 + Math.random() * 4,
+  left: Math.random() * 100,
+  top: Math.random() * 10,
+  duration: 5 + Math.random() * 8,
+  delay: Math.random() * 8,
+  opacity: 0.3 + Math.random() * 0.5,
+}));
+
 const DemoLanding = () => {
   const navigate = useNavigate();
 
@@ -144,20 +148,20 @@ const DemoLanding = () => {
     }}>
       {/* CSS Snow Particles */}
       <Box sx={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
-        {Array.from({ length: 30 }).map((_, i) => (
+        {snowflakes.map((flake) => (
           <Box
-            key={i}
+            key={flake.id}
             sx={{
               position: 'absolute',
-              width: 4 + Math.random() * 4,
-              height: 4 + Math.random() * 4,
+              width: flake.size,
+              height: flake.size,
               borderRadius: '50%',
               background: 'rgba(255, 255, 255, 0.6)',
-              left: `${Math.random() * 100}%`,
-              top: `-${Math.random() * 10}vh`,
-              animation: `snowfall ${5 + Math.random() * 8}s linear infinite`,
-              animationDelay: `${Math.random() * 8}s`,
-              opacity: 0.3 + Math.random() * 0.5,
+              left: `${flake.left}%`,
+              top: `-${flake.top}vh`,
+              animation: `snowfall ${flake.duration}s linear infinite`,
+              animationDelay: `${flake.delay}s`,
+              opacity: flake.opacity,
             }}
           />
         ))}
@@ -175,7 +179,7 @@ const DemoLanding = () => {
         {/* Floating assets */}
         <Box
           component="img"
-          src={`${assetBase}santa-hat.png`}
+          src={`${assetBase}santa-hat.webp`}
           alt=""
           sx={{
             position: 'absolute',
@@ -189,7 +193,7 @@ const DemoLanding = () => {
         />
         <Box
           component="img"
-          src={`${assetBase}elf-hat.png`}
+          src={`${assetBase}elf-hat.webp`}
           alt=""
           sx={{
             position: 'absolute',
@@ -203,7 +207,7 @@ const DemoLanding = () => {
         />
         <Box
           component="img"
-          src={`${assetBase}tree-outfit.png`}
+          src={`${assetBase}tree-outfit.webp`}
           alt=""
           sx={{
             position: 'absolute',
@@ -217,7 +221,7 @@ const DemoLanding = () => {
         />
         <Box
           component="img"
-          src={`${assetBase}santa-sledge.png`}
+          src={`${assetBase}santa-sledge.webp`}
           alt=""
           sx={{
             position: 'absolute',
@@ -231,6 +235,23 @@ const DemoLanding = () => {
         />
 
         <Container maxWidth="md" sx={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
+          {/* Back button */}
+          <Button
+            startIcon={<BackIcon />}
+            onClick={() => navigate('/')}
+            sx={{
+              position: 'absolute',
+              top: { xs: -40, md: -60 },
+              left: 0,
+              color: text.muted,
+              textTransform: 'none',
+              '&:hover': { color: text.primary },
+              ...focusRing,
+            }}
+          >
+            All Projects
+          </Button>
+
           <Typography
             variant="h1"
             fontWeight={800}
@@ -246,7 +267,7 @@ const DemoLanding = () => {
           <Typography
             variant="h5"
             sx={{
-              color: 'rgba(255, 255, 255, 0.7)',
+              color: text.secondary,
               maxWidth: 600,
               mx: 'auto',
               mb: 5,
@@ -258,30 +279,13 @@ const DemoLanding = () => {
             Real-time AI-powered face filters built with React and MediaPipe.
             Detects 478 facial landmarks for smooth, jitter-free overlays at 60fps.
           </Typography>
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<PlayIcon />}
-            onClick={handleTryLive}
-            sx={{
-              py: 1.8,
-              px: 5,
-              textTransform: 'none',
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              borderRadius: 3,
-              boxShadow: '0 4px 20px rgba(102, 126, 234, 0.4)',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
-                transform: 'translateY(-2px)',
-                boxShadow: '0 8px 30px rgba(102, 126, 234, 0.6)',
-              },
-            }}
-          >
-            Try it Live
-          </Button>
+          <ProjectLinks
+            onLive={handleTryLive}
+            sourceUrl={repos.portfolio}
+            gradient={accent}
+            gradientHover={accentHover}
+            note="Runs entirely in your browser and needs camera access. Frames never leave the page — there is no backend."
+          />
         </Container>
       </Box>
 
@@ -290,6 +294,7 @@ const DemoLanding = () => {
         <Container maxWidth="lg">
           <Typography
             variant="h3"
+            component="h2"
             fontWeight={700}
             textAlign="center"
             sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
@@ -299,7 +304,7 @@ const DemoLanding = () => {
           <Typography
             variant="body1"
             textAlign="center"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 6, maxWidth: 500, mx: 'auto' }}
+            sx={{ color: text.muted, mb: 6, maxWidth: 500, mx: 'auto' }}
           >
             Built with computer vision and real-time rendering for an interactive experience.
           </Typography>
@@ -326,7 +331,10 @@ const DemoLanding = () => {
                       <Box
                         component="img"
                         src={`${assetBase}${feature.image}`}
-                        alt={feature.title}
+                        /* Decorative: the feature title is already the heading
+                           directly below, so alt text here would repeat it. */
+                        alt=""
+                        loading="lazy"
                         sx={{
                           width: '100%',
                           height: 120,
@@ -337,10 +345,10 @@ const DemoLanding = () => {
                         }}
                       />
                     )}
-                    <Typography variant="h6" fontWeight={600} sx={{ color: 'white', mb: 1 }}>
+                    <Typography variant="h6" component="h3" fontWeight={600} sx={{ color: text.primary, mb: 1 }}>
                       {feature.title}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.7 }}>
+                    <Typography variant="body2" sx={{ color: text.muted, lineHeight: 1.7 }}>
                       {feature.description}
                     </Typography>
                   </CardContent>
@@ -356,6 +364,7 @@ const DemoLanding = () => {
         <Container maxWidth="lg">
           <Typography
             variant="h3"
+            component="h2"
             fontWeight={700}
             textAlign="center"
             sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
@@ -365,7 +374,7 @@ const DemoLanding = () => {
           <Typography
             variant="body1"
             textAlign="center"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 6, maxWidth: 500, mx: 'auto' }}
+            sx={{ color: text.muted, mb: 6, maxWidth: 500, mx: 'auto' }}
           >
             Three-stage pipeline from camera to rendered overlay.
           </Typography>
@@ -403,12 +412,12 @@ const DemoLanding = () => {
                     }}>
                       {index + 1}
                     </Box>
-                    <Box sx={{ color: 'rgba(255,255,255,0.7)' }}>{step.icon}</Box>
+                    <Box sx={{ color: text.secondary }}>{step.icon}</Box>
                   </Box>
-                  <Typography variant="h6" fontWeight={600} sx={{ color: 'white', mb: 1 }}>
+                  <Typography variant="h6" component="h3" fontWeight={600} sx={{ color: text.primary, mb: 1 }}>
                     {step.title}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, maxWidth: 280, mx: 'auto' }}>
+                  <Typography variant="body2" sx={{ color: text.muted, lineHeight: 1.7, maxWidth: 280, mx: 'auto' }}>
                     {step.description}
                   </Typography>
                 </Box>
@@ -418,11 +427,15 @@ const DemoLanding = () => {
         </Container>
       </Box>
 
+      {/* CASE STUDY */}
+      <CaseStudy study={caseStudies['face-filter']} gradient={accent} />
+
       {/* TECH STACK SECTION */}
       <Box sx={{ py: { xs: 6, md: 8 }, position: 'relative', zIndex: 1 }}>
         <Container maxWidth="md">
           <Typography
             variant="h3"
+            component="h2"
             fontWeight={700}
             textAlign="center"
             sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
@@ -432,7 +445,7 @@ const DemoLanding = () => {
           <Typography
             variant="body1"
             textAlign="center"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 5, maxWidth: 400, mx: 'auto' }}
+            sx={{ color: text.muted, mb: 5, maxWidth: 400, mx: 'auto' }}
           >
             Modern web technologies for real-time AI video processing.
           </Typography>
@@ -470,50 +483,29 @@ const DemoLanding = () => {
         <Container maxWidth="sm">
           <Typography
             variant="h4"
+            component="h2"
             fontWeight={700}
-            sx={{ color: 'white', mb: 2, fontSize: { xs: '1.5rem', md: '2rem' } }}
+            sx={{ color: text.primary, mb: 2, fontSize: { xs: '1.5rem', md: '2rem' } }}
           >
             Ready to try it?
           </Typography>
           <Typography
             variant="body1"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 4 }}
+            sx={{ color: text.muted, mb: 4 }}
           >
             Grant camera access and see the filters in action on your own face.
           </Typography>
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<PlayIcon />}
-            onClick={handleTryLive}
-            sx={{
-              py: 1.8,
-              px: 5,
-              textTransform: 'none',
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              borderRadius: 3,
-              boxShadow: '0 4px 20px rgba(102, 126, 234, 0.4)',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
-                transform: 'translateY(-2px)',
-                boxShadow: '0 8px 30px rgba(102, 126, 234, 0.6)',
-              },
-            }}
-          >
-            Try it Live
-          </Button>
-          <Typography
-            variant="caption"
-            display="block"
-            sx={{ color: 'rgba(255,255,255,0.3)', mt: 6, pb: 2 }}
-          >
-            Requires camera access. Works best in Chrome or Edge.
-          </Typography>
+          <ProjectLinks
+            onLive={handleTryLive}
+            sourceUrl={repos.portfolio}
+            gradient={accent}
+            gradientHover={accentHover}
+            note="Requires camera access. Works best in Chrome or Edge."
+          />
         </Container>
       </Box>
+
+      <SiteFooter note="Built with React 19, MediaPipe Tasks Vision, and the Canvas API." />
     </Box>
   );
 };

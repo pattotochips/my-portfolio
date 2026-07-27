@@ -1,13 +1,17 @@
-import { useState } from 'react';
-import { HashRouter, Routes, Route, useSearchParams } from 'react-router-dom';
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
-import Login from './components/Login';
-import MenuSettings from './components/MenuSettings';
-import VideoScreen from './components/VideoScreen';
-import DemoLanding from './components/DemoLanding';
-import ExpenseSplitterLanding from './components/ExpenseSplitterLanding';
-import OOOGeneratorLanding from './components/OOOGeneratorLanding';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider, createTheme, CssBaseline, Box, CircularProgress } from '@mui/material';
 import PortfolioHome from './components/PortfolioHome';
+import { pageBackground } from './styles/shared';
+
+// Everything past the home page loads on demand. The face filter app in
+// particular drags in MediaPipe and dnd-kit, which have no business being in
+// the bundle someone downloads to read the home page.
+const DemoLanding = lazy(() => import('./components/DemoLanding'));
+const ExpenseSplitterLanding = lazy(() => import('./components/ExpenseSplitterLanding'));
+const OOOGeneratorLanding = lazy(() => import('./components/OOOGeneratorLanding'));
+const BirthdayBotLanding = lazy(() => import('./components/BirthdayBotLanding'));
+const FaceFilterApp = lazy(() => import('./components/FaceFilterApp'));
 
 const theme = createTheme({
   palette: {
@@ -24,93 +28,66 @@ const theme = createTheme({
   },
 });
 
-function AppMain() {
-  const [searchParams] = useSearchParams();
-  const isDemoMode = searchParams.get('demo') === '1';
-  const [isAuthenticated, setIsAuthenticated] = useState(isDemoMode);
-  const [currentView, setCurrentView] = useState('menu'); // 'menu' or 'video'
-  const [startMode, setStartMode] = useState('live'); // 'live' or 'ads'
-  const [settings, setSettings] = useState({
-    snow: {
-      enabled: true,
-      speed: 1,
-      pileHeight: 20,
-    },
-    santa: {
-      hatImage: null,
-      beardImage: null,
-    },
-    ads: {
-      videoFile: null,
-      controlMode: 'duration', // 'duration' or 'loop'
-      duration: 60,
-      loopCount: 1,
-    },
-    customProp: {
-      imageFile: null,
-      position: 'face', // 'face', 'nose', 'head', 'eyes', 'mouth'
-      name: '',
-    },
-    game: {
-      tickerText: 'Congratulations, you can now collect your 10% discount offer from the store!',
-      tickerSpeed: 1.5,
-      winnerText: 'YOU WIN!',
-      joiningWaitTime: 20,
-      resultDisplayTime: 60,
-      startMode: 'automatic',
-    },
-  });
-
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
-
-  const handleSettingsChange = (newSettings) => {
-    setSettings(newSettings);
-  };
-
-  const handleStartVideo = (mode = 'live') => {
-    setStartMode(mode);
-    setCurrentView('video');
-  };
-
-  const handleBackToMenu = () => {
-    setCurrentView('menu');
-  };
-
-  if (!isAuthenticated) {
-    return <Login onLogin={handleLogin} />;
-  }
-
-  return currentView === 'menu' ? (
-    <MenuSettings
-      settings={settings}
-      onSettingsChange={handleSettingsChange}
-      onStartVideo={handleStartVideo}
-    />
-  ) : (
-    <VideoScreen
-      settings={settings}
-      onSettingsChange={handleSettingsChange}
-      onBackToMenu={handleBackToMenu}
-      startMode={startMode}
-    />
-  );
-}
+const RouteFallback = () => (
+  <Box
+    role="status"
+    aria-live="polite"
+    aria-label="Loading page"
+    sx={{
+      minHeight: '100vh',
+      background: pageBackground,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    <CircularProgress aria-hidden="true" />
+  </Box>
+);
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<PortfolioHome />} />
-          <Route path="/face-filter" element={<DemoLanding />} />
-          <Route path="/expense-splitter" element={<ExpenseSplitterLanding />} />
-          <Route path="/ooo-generator" element={<OOOGeneratorLanding />} />
-          <Route path="/face-filter/app" element={<AppMain />} />
-        </Routes>
-      </HashRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <Box
+          component="a"
+          href="#main"
+          sx={{
+            position: 'absolute',
+            left: -9999,
+            top: 0,
+            zIndex: 2000,
+            px: 2,
+            py: 1.25,
+            borderRadius: '0 0 8px 0',
+            background: '#ffffff',
+            color: '#0a0e27',
+            fontWeight: 700,
+            textDecoration: 'none',
+            '&:focus': { left: 0 },
+          }}
+        >
+          Skip to content
+        </Box>
+        {/* tabIndex makes the skip link actually move focus here — browsers do
+            not reliably focus a non-focusable anchor target. */}
+        <Box component="main" id="main" tabIndex={-1}>
+          <Suspense fallback={<RouteFallback />}>
+            <Routes>
+              <Route path="/" element={<PortfolioHome />} />
+              <Route path="/face-filter" element={<DemoLanding />} />
+              <Route path="/expense-splitter" element={<ExpenseSplitterLanding />} />
+              <Route path="/ooo-generator" element={<OOOGeneratorLanding />} />
+              <Route path="/birthday-bot" element={<BirthdayBotLanding />} />
+              <Route path="/face-filter/app" element={<FaceFilterApp />} />
+              {/* GitHub Pages serves 404.html for unknown paths; the router lands
+                  here and sends the visitor home rather than showing a blank page. */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+        </Box>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

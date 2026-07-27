@@ -9,166 +9,358 @@ import {
   Chip,
   Stack,
   Grid,
+  Button,
+  Avatar,
+  Divider,
 } from '@mui/material';
 import {
   ArrowForward as ArrowIcon,
   ReceiptLong as ReceiptIcon,
   BeachAccess as BeachIcon,
+  Cake as CakeIcon,
+  GitHub as GitHubIcon,
+  LinkedIn as LinkedInIcon,
+  Email as EmailIcon,
+  Description as ResumeIcon,
+  Verified as TestedIcon,
+  Work as WorkIcon,
+  School as SchoolIcon,
+  Place as PlaceIcon,
 } from '@mui/icons-material';
+import { profile, skills, experience, education, repos } from '../data/profile';
+import SiteFooter from './SiteFooter';
+import { glassCard, gradientText, pageBackground, text, focusRing } from '../styles/shared';
 
 const assetBase = import.meta.env.BASE_URL + 'assets/';
+const publicBase = import.meta.env.BASE_URL;
 
-const gradientText = {
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  backgroundClip: 'text',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-};
+const brandGradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
 
 const projects = [
   {
     id: 'face-filter',
     title: 'Face Filter App',
-    description: 'Real-time AI-powered face filters using MediaPipe for 478-landmark detection. Features Santa/tree costumes, snow effects, interactive game mode, and drag-and-drop sequencing.',
-    image: 'santa-hat.png',
+    description:
+      'Real-time AI face filters over a live camera feed. Three MediaPipe models in one render loop, positional smoothing to kill jitter, snow particles, a hand-gesture game, and a drag-and-drop sequencer so a non-developer can reconfigure the whole thing.',
+    image: 'santa-hat.webp',
     tags: ['React 19', 'MediaPipe', 'Canvas API', 'MUI 7'],
-    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    gradient: brandGradient,
     route: '/face-filter',
+    repo: repos.portfolio,
   },
   {
     id: 'expense-splitter',
     title: 'Expense Splitter',
-    description: 'Full-stack expense splitting app with Firebase auth, real-time Firestore data, group management, automatic balance calculation, and multi-currency support.',
+    description:
+      'Shared-expense tracker for groups. Firebase Auth for identity, Firestore listeners so balances update across devices without a refresh, and balances derived from the expense list rather than stored as a counter that can drift.',
     icon: <ReceiptIcon sx={{ fontSize: 72, color: 'white', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.3))' }} />,
     tags: ['React 18', 'Firebase', 'Firestore', 'MUI 6'],
     gradient: 'linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%)',
     route: '/expense-splitter',
+    repo: repos.expenseSplitter,
   },
   {
     id: 'ooo-generator',
     title: 'OOO Generator',
-    description: 'Pixel art-styled Out of Office message generator with 4 tone presets, live preview, copy-to-clipboard, and a procedural 8-bit chiptune music player.',
+    description:
+      'Pixel-art Out of Office generator. Four tones that each restructure the message rather than swapping adjectives, deterministic generation with no model call, and a chiptune loop synthesized at runtime with the Web Audio API.',
     icon: <BeachIcon sx={{ fontSize: 72, color: 'white', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.3))' }} />,
     tags: ['Next.js 16', 'TypeScript', 'Tailwind CSS', 'Web Audio API'],
     gradient: 'linear-gradient(135deg, #0077A8 0%, #F5D78E 100%)',
     route: '/ooo-generator',
+    repo: repos.oooGenerator,
+    tested: 'Jest + RTL',
+  },
+  {
+    id: 'birthday-bot',
+    title: 'Birthday Reminder Bot',
+    description:
+      'Discord bot that takes reminders by chat command and announces them in-channel. Relative and absolute scheduling, timezone-aware dates via date-fns-tz, per-user timer tracking, and an Express health endpoint to survive free-tier hosting.',
+    icon: <CakeIcon sx={{ fontSize: 72, color: 'white', filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.3))' }} />,
+    tags: ['Node.js', 'discord.js 14', 'Express', 'date-fns-tz'],
+    gradient: 'linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%)',
+    route: '/birthday-bot',
+    repo: repos.birthdayBot,
   },
 ];
+
+const heroLinks = [
+  {
+    label: 'Email',
+    href: `mailto:${profile.email}`,
+    icon: <EmailIcon />,
+    variant: 'contained',
+  },
+  {
+    label: 'LinkedIn',
+    href: profile.linkedin,
+    icon: <LinkedInIcon />,
+    variant: 'outlined',
+    external: true,
+  },
+  {
+    label: 'GitHub',
+    href: profile.github,
+    icon: <GitHubIcon />,
+    variant: 'outlined',
+    external: true,
+  },
+  {
+    label: 'Résumé',
+    href: publicBase + profile.resume,
+    icon: <ResumeIcon />,
+    variant: 'outlined',
+    external: true,
+  },
+];
+
+const SectionTitle = ({ id, children, subtitle }) => (
+  <>
+    <Typography
+      id={id}
+      variant="h3"
+      component="h2"
+      fontWeight={700}
+      textAlign="center"
+      sx={{ ...gradientText(brandGradient), mb: subtitle ? 1.5 : 5, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
+    >
+      {children}
+    </Typography>
+    {subtitle && (
+      <Typography
+        variant="body1"
+        textAlign="center"
+        sx={{ color: text.muted, mb: 6, maxWidth: 560, mx: 'auto', lineHeight: 1.8 }}
+      >
+        {subtitle}
+      </Typography>
+    )}
+  </>
+);
 
 const PortfolioHome = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%)',
-    }}>
-      {/* Hero */}
-      <Box sx={{
-        pt: { xs: 10, md: 16 },
-        pb: { xs: 6, md: 10 },
-        textAlign: 'center',
-      }}>
+    <Box sx={{ minHeight: '100vh', background: pageBackground }}>
+      {/* ---------------- HERO ---------------- */}
+      <Box
+        component="header"
+        sx={{ pt: { xs: 8, md: 12 }, pb: { xs: 6, md: 8 }, textAlign: 'center' }}
+      >
         <Container maxWidth="md">
+          <Avatar
+            src={publicBase + profile.avatar}
+            alt={`Portrait of ${profile.name}`}
+            sx={{
+              width: { xs: 96, md: 120 },
+              height: { xs: 96, md: 120 },
+              mx: 'auto',
+              mb: 3,
+              border: '3px solid rgba(255,255,255,0.16)',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.45)',
+            }}
+          />
           <Typography
-            variant="h2"
+            variant="h1"
             fontWeight={800}
             sx={{
-              ...gradientText,
+              ...gradientText(brandGradient),
               fontSize: { xs: '2.2rem', sm: '3rem', md: '3.8rem' },
-              mb: 2,
+              mb: 1.5,
               letterSpacing: '-0.02em',
             }}
           >
-            My Projects
+            {profile.name}
           </Typography>
           <Typography
-            variant="h6"
+            variant="h5"
+            component="p"
             sx={{
-              color: 'rgba(255, 255, 255, 0.6)',
-              fontWeight: 300,
-              maxWidth: 500,
-              mx: 'auto',
-              lineHeight: 1.6,
-              fontSize: { xs: '1rem', md: '1.15rem' },
+              color: text.primary,
+              fontWeight: 600,
+              mb: 1.5,
+              fontSize: { xs: '1.1rem', md: '1.4rem' },
             }}
           >
-            Interactive demos built with modern web technologies.
+            {profile.role}
           </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: text.muted,
+              maxWidth: 620,
+              mx: 'auto',
+              lineHeight: 1.8,
+              fontSize: { xs: '0.98rem', md: '1.1rem' },
+              mb: 2,
+            }}
+          >
+            {profile.tagline}
+          </Typography>
+          <Stack
+            direction="row"
+            spacing={0.75}
+            justifyContent="center"
+            alignItems="center"
+            sx={{ color: text.faint, mb: 4 }}
+          >
+            <PlaceIcon fontSize="small" aria-hidden="true" />
+            <Typography variant="body2">{profile.location}</Typography>
+          </Stack>
+
+          <Stack direction="row" spacing={1.5} justifyContent="center" flexWrap="wrap" useFlexGap>
+            {heroLinks.map((link) => (
+              <Button
+                key={link.label}
+                variant={link.variant}
+                startIcon={link.icon}
+                href={link.href}
+                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                sx={{
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  borderRadius: 2.5,
+                  py: 1.1,
+                  px: 2.5,
+                  ...(link.variant === 'contained'
+                    ? {
+                        background: brandGradient,
+                        color: '#ffffff',
+                        boxShadow: '0 4px 20px rgba(102, 126, 234, 0.4)',
+                        '&:hover': { background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)' },
+                      }
+                    : {
+                        color: text.primary,
+                        borderColor: 'rgba(255,255,255,0.32)',
+                        background: 'rgba(255,255,255,0.04)',
+                        '&:hover': {
+                          borderColor: 'rgba(255,255,255,0.7)',
+                          background: 'rgba(255,255,255,0.1)',
+                        },
+                      }),
+                  ...focusRing,
+                }}
+              >
+                {link.label}
+              </Button>
+            ))}
+          </Stack>
         </Container>
       </Box>
 
-      {/* Project Cards */}
-      <Box sx={{ pb: { xs: 10, md: 16 } }}>
+      {/* ---------------- PROJECTS ---------------- */}
+      <Box component="section" aria-labelledby="projects-heading" sx={{ py: { xs: 6, md: 8 } }}>
         <Container maxWidth="lg">
+          <SectionTitle id="projects-heading" subtitle="Side projects, each with a written case study covering the problem, the approach, and the trade-offs.">
+            Projects
+          </SectionTitle>
           <Grid container spacing={3} justifyContent="center">
             {projects.map((project) => (
-              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={project.id}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={project.id}>
                 <Card
                   elevation={0}
                   sx={{
+                    ...glassCard,
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: 3,
                     overflow: 'hidden',
-                    transition: 'all 0.3s ease',
                     '&:hover': {
-                      background: 'rgba(255, 255, 255, 0.08)',
+                      ...glassCard['&:hover'],
                       transform: 'translateY(-6px)',
                       boxShadow: '0 16px 48px rgba(0, 0, 0, 0.4)',
-                      '& .arrow-icon': {
-                        transform: 'translateX(4px)',
-                      },
+                      '& .arrow-icon': { transform: 'translateX(4px)' },
                     },
                   }}
                 >
-                  <CardActionArea onClick={() => navigate(project.route)} sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
-                    {/* Project thumbnail */}
-                    <Box sx={{
-                      height: 180,
-                      background: project.gradient,
+                  <CardActionArea
+                    onClick={() => navigate(project.route)}
+                    aria-label={`${project.title} — read the case study`}
+                    sx={{
+                      height: '100%',
                       display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      position: 'relative',
-                      overflow: 'hidden',
-                    }}>
+                      flexDirection: 'column',
+                      alignItems: 'stretch',
+                      ...focusRing,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        height: 160,
+                        background: project.gradient,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        position: 'relative',
+                        overflow: 'hidden',
+                      }}
+                    >
                       {project.image ? (
                         <Box
                           component="img"
                           src={`${assetBase}${project.image}`}
-                          alt={project.title}
+                          alt=""
+                          loading="lazy"
+                          width="112"
+                          height="140"
                           sx={{
                             height: '70%',
+                            width: 'auto',
                             objectFit: 'contain',
                             filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.3))',
                           }}
                         />
-                      ) : project.icon ? (
-                        project.icon
-                      ) : null}
+                      ) : (
+                        <Box aria-hidden="true" sx={{ display: 'flex' }}>{project.icon}</Box>
+                      )}
                     </Box>
 
-                    <CardContent sx={{ p: 3 }}>
-                      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1.5 }}>
-                        <Typography variant="h5" fontWeight={700} sx={{ color: 'white' }}>
+                    <CardContent sx={{ p: 3, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                      <Stack
+                        direction="row"
+                        alignItems="flex-start"
+                        justifyContent="space-between"
+                        spacing={1}
+                        sx={{ mb: 1.5 }}
+                      >
+                        <Typography variant="h6" component="h3" fontWeight={700} sx={{ color: text.primary }}>
                           {project.title}
                         </Typography>
                         <ArrowIcon
                           className="arrow-icon"
+                          aria-hidden="true"
                           sx={{
-                            color: 'rgba(255,255,255,0.4)',
+                            color: text.faint,
+                            flexShrink: 0,
+                            mt: 0.4,
                             transition: 'transform 0.3s ease',
+                            '@media (prefers-reduced-motion: reduce)': { transition: 'none' },
                           }}
                         />
                       </Stack>
+
+                      {project.tested && (
+                        <Chip
+                          icon={<TestedIcon />}
+                          label={`Tested · ${project.tested}`}
+                          size="small"
+                          sx={{
+                            alignSelf: 'flex-start',
+                            mb: 1.5,
+                            fontSize: '0.72rem',
+                            fontWeight: 700,
+                            background: 'rgba(67, 233, 123, 0.14)',
+                            border: '1px solid rgba(67, 233, 123, 0.45)',
+                            color: '#7ef0a8',
+                            '& .MuiChip-icon': { color: '#7ef0a8', fontSize: 15 },
+                          }}
+                        />
+                      )}
+
                       <Typography
                         variant="body2"
-                        sx={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, mb: 2.5 }}
+                        sx={{ color: text.muted, lineHeight: 1.75, mb: 2.5, flexGrow: 1 }}
                       >
                         {project.description}
                       </Typography>
@@ -179,23 +371,275 @@ const PortfolioHome = () => {
                             label={tag}
                             size="small"
                             sx={{
-                              fontSize: '0.75rem',
+                              fontSize: '0.72rem',
                               fontWeight: 600,
                               background: 'rgba(255, 255, 255, 0.08)',
-                              border: '1px solid rgba(255, 255, 255, 0.1)',
-                              color: 'rgba(255, 255, 255, 0.7)',
+                              border: '1px solid rgba(255, 255, 255, 0.14)',
+                              color: text.secondary,
                             }}
                           />
                         ))}
                       </Stack>
                     </CardContent>
                   </CardActionArea>
+
+                  <Box sx={{ px: 3, pb: 2.5, pt: 0 }}>
+                    <Button
+                      size="small"
+                      startIcon={<GitHubIcon />}
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${project.title} source on GitHub`}
+                      sx={{
+                        textTransform: 'none',
+                        color: text.muted,
+                        fontWeight: 600,
+                        '&:hover': { color: text.primary, background: 'rgba(255,255,255,0.06)' },
+                        ...focusRing,
+                      }}
+                    >
+                      Source
+                    </Button>
+                  </Box>
                 </Card>
               </Grid>
             ))}
           </Grid>
         </Container>
       </Box>
+
+      {/* ---------------- ABOUT ---------------- */}
+      <Box component="section" aria-labelledby="about-heading" sx={{ py: { xs: 8, md: 10 } }}>
+        <Container maxWidth="md">
+          <SectionTitle id="about-heading">About</SectionTitle>
+          <Stack spacing={2.5}>
+            {profile.about.map((para) => (
+              <Typography
+                key={para.slice(0, 40)}
+                variant="body1"
+                sx={{ color: text.muted, lineHeight: 1.9, fontSize: { xs: '0.98rem', md: '1.05rem' } }}
+              >
+                {para}
+              </Typography>
+            ))}
+          </Stack>
+        </Container>
+      </Box>
+
+      {/* ---------------- SKILLS ---------------- */}
+      <Box component="section" aria-labelledby="skills-heading" sx={{ py: { xs: 8, md: 10 } }}>
+        <Container maxWidth="lg">
+          <SectionTitle id="skills-heading">Skills</SectionTitle>
+          <Grid container spacing={3}>
+            {skills.map((group) => (
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={group.category}>
+                <Card elevation={0} sx={{ ...glassCard, height: '100%' }}>
+                  <CardContent sx={{ p: 3 }}>
+                    <Typography
+                      variant="subtitle1"
+                      component="h3"
+                      fontWeight={700}
+                      sx={{ color: text.primary, mb: 2 }}
+                    >
+                      {group.category}
+                    </Typography>
+                    <Stack direction="row" flexWrap="wrap" gap={0.8} component="ul" sx={{ listStyle: 'none', m: 0, p: 0 }}>
+                      {group.items.map((item) => (
+                        <Box component="li" key={item} sx={{ display: 'inline-flex' }}>
+                          <Chip
+                            label={item}
+                            size="small"
+                            sx={{
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              background: 'rgba(255, 255, 255, 0.07)',
+                              border: '1px solid rgba(255, 255, 255, 0.14)',
+                              color: text.secondary,
+                            }}
+                          />
+                        </Box>
+                      ))}
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* ---------------- EXPERIENCE ---------------- */}
+      <Box component="section" aria-labelledby="experience-heading" sx={{ py: { xs: 8, md: 10 } }}>
+        <Container maxWidth="md">
+          <SectionTitle id="experience-heading" subtitle="8+ years across product engineering and large-scale modernization work.">
+            Experience
+          </SectionTitle>
+          <Stack spacing={3} component="ol" sx={{ listStyle: 'none', m: 0, p: 0 }}>
+            {experience.map((job) => (
+              <Card component="li" elevation={0} key={`${job.company}-${job.period}`} sx={glassCard}>
+                <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+                  <Stack
+                    direction={{ xs: 'column', sm: 'row' }}
+                    justifyContent="space-between"
+                    alignItems={{ xs: 'flex-start', sm: 'center' }}
+                    spacing={1}
+                    sx={{ mb: 2 }}
+                  >
+                    <Box>
+                      <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
+                        <WorkIcon aria-hidden="true" sx={{ color: text.faint, fontSize: 18 }} />
+                        <Typography variant="h6" component="h3" fontWeight={700} sx={{ color: text.primary }}>
+                          {job.company}
+                        </Typography>
+                        {job.current && (
+                          <Chip
+                            label="Current"
+                            size="small"
+                            sx={{
+                              height: 20,
+                              fontSize: '0.68rem',
+                              fontWeight: 700,
+                              background: 'rgba(67, 233, 123, 0.16)',
+                              border: '1px solid rgba(67, 233, 123, 0.45)',
+                              color: '#7ef0a8',
+                            }}
+                          />
+                        )}
+                      </Stack>
+                      <Typography variant="body2" sx={{ color: text.faint, mt: 0.5 }}>
+                        via {job.employer} · {job.location}
+                      </Typography>
+                    </Box>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: text.secondary, fontWeight: 600, whiteSpace: 'nowrap' }}
+                    >
+                      {job.period}
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" flexWrap="wrap" gap={0.7} sx={{ mb: 2.5 }}>
+                    {job.stack.map((tech) => (
+                      <Chip
+                        key={tech}
+                        label={tech}
+                        size="small"
+                        sx={{
+                          fontSize: '0.7rem',
+                          fontWeight: 600,
+                          background: 'rgba(102, 126, 234, 0.14)',
+                          border: '1px solid rgba(102, 126, 234, 0.4)',
+                          color: '#b3c0ff',
+                        }}
+                      />
+                    ))}
+                  </Stack>
+
+                  <Stack spacing={1.4} component="ul" sx={{ listStyle: 'none', m: 0, p: 0 }}>
+                    {job.highlights.map((point) => (
+                      <Stack
+                        component="li"
+                        key={point.slice(0, 40)}
+                        direction="row"
+                        spacing={1.5}
+                        alignItems="flex-start"
+                      >
+                        <Box
+                          aria-hidden="true"
+                          sx={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: '50%',
+                            background: brandGradient,
+                            mt: 1.15,
+                            flexShrink: 0,
+                          }}
+                        />
+                        <Typography variant="body2" sx={{ color: text.muted, lineHeight: 1.8 }}>
+                          {point}
+                        </Typography>
+                      </Stack>
+                    ))}
+                  </Stack>
+                </CardContent>
+              </Card>
+            ))}
+          </Stack>
+        </Container>
+      </Box>
+
+      {/* ---------------- EDUCATION ---------------- */}
+      <Box component="section" aria-labelledby="education-heading" sx={{ py: { xs: 8, md: 10 } }}>
+        <Container maxWidth="md">
+          <SectionTitle id="education-heading">Education</SectionTitle>
+          <Card elevation={0} sx={glassCard}>
+            <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+              <Stack divider={<Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />} spacing={2.5}>
+                {education.map((item) => (
+                  <Stack
+                    key={item.institution}
+                    direction={{ xs: 'column', sm: 'row' }}
+                    justifyContent="space-between"
+                    alignItems={{ xs: 'flex-start', sm: 'center' }}
+                    spacing={0.5}
+                  >
+                    <Box>
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <SchoolIcon aria-hidden="true" sx={{ color: text.faint, fontSize: 18 }} />
+                        <Typography variant="subtitle1" component="h3" fontWeight={700} sx={{ color: text.primary }}>
+                          {item.institution}
+                        </Typography>
+                      </Stack>
+                      <Typography variant="body2" sx={{ color: text.muted, mt: 0.5 }}>
+                        {item.qualification} · {item.detail}
+                      </Typography>
+                    </Box>
+                    <Typography variant="body2" sx={{ color: text.secondary, fontWeight: 600 }}>
+                      {item.year}
+                    </Typography>
+                  </Stack>
+                ))}
+              </Stack>
+            </CardContent>
+          </Card>
+        </Container>
+      </Box>
+
+      {/* ---------------- CONTACT ---------------- */}
+      <Box component="section" aria-labelledby="contact-heading" sx={{ py: { xs: 8, md: 10 } }}>
+        <Container maxWidth="sm" sx={{ textAlign: 'center' }}>
+          <SectionTitle id="contact-heading">Get in touch</SectionTitle>
+          <Typography variant="body1" sx={{ color: text.muted, mb: 4, lineHeight: 1.8 }}>
+            Open to conversations about full-stack and frontend architecture roles. The fastest way
+            to reach me is email.
+          </Typography>
+          <Stack direction="row" spacing={1.5} justifyContent="center" flexWrap="wrap" useFlexGap>
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<EmailIcon />}
+              href={`mailto:${profile.email}`}
+              sx={{
+                textTransform: 'none',
+                fontWeight: 600,
+                fontSize: '1.05rem',
+                py: 1.5,
+                px: 4,
+                borderRadius: 3,
+                background: brandGradient,
+                boxShadow: '0 4px 20px rgba(102, 126, 234, 0.4)',
+                '&:hover': { background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)' },
+                ...focusRing,
+              }}
+            >
+              {profile.email}
+            </Button>
+          </Stack>
+        </Container>
+      </Box>
+
+      <SiteFooter note="Built with React 19, Vite, and MUI 7. Source on GitHub." />
     </Box>
   );
 };

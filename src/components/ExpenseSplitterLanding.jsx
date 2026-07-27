@@ -20,30 +20,19 @@ import {
   PersonAdd as PersonAddIcon,
   Calculate as CalculateIcon,
   Handshake as SettleIcon,
-  OpenInNew as OpenInNewIcon,
   ArrowBack as BackIcon,
 } from '@mui/icons-material';
+import CaseStudy from './CaseStudy';
+import ProjectLinks from './ProjectLinks';
+import SiteFooter from './SiteFooter';
+import { caseStudies } from '../data/caseStudies';
+import { repos } from '../data/profile';
+import { glassCard, gradientText as makeGradientText, text, focusRing } from '../styles/shared';
 
-const glassCard = {
-  background: 'rgba(255, 255, 255, 0.05)',
-  backdropFilter: 'blur(10px)',
-  border: '1px solid rgba(255, 255, 255, 0.1)',
-  borderRadius: 3,
-  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-  transition: 'all 0.3s ease',
-  '&:hover': {
-    background: 'rgba(255, 255, 255, 0.08)',
-    transform: 'translateY(-4px)',
-    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4)',
-  },
-};
+const accent = 'linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%)';
+const accentHover = 'linear-gradient(135deg, #00CEC9 0%, #6C5CE7 100%)';
 
-const gradientText = {
-  background: 'linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%)',
-  backgroundClip: 'text',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-};
+const gradientText = makeGradientText(accent);
 
 const features = [
   {
@@ -231,9 +220,10 @@ const ExpenseSplitterLanding = () => {
               position: 'absolute',
               top: { xs: -40, md: -60 },
               left: 0,
-              color: 'rgba(255,255,255,0.5)',
+              color: text.muted,
               textTransform: 'none',
-              '&:hover': { color: 'rgba(255,255,255,0.8)' },
+              '&:hover': { color: text.primary },
+              ...focusRing,
             }}
           >
             All Projects
@@ -254,7 +244,7 @@ const ExpenseSplitterLanding = () => {
           <Typography
             variant="h5"
             sx={{
-              color: 'rgba(255, 255, 255, 0.7)',
+              color: text.secondary,
               maxWidth: 600,
               mx: 'auto',
               mb: 5,
@@ -266,34 +256,12 @@ const ExpenseSplitterLanding = () => {
             A full-stack app to split expenses among groups.
             Firebase-powered with real-time data, automatic balance calculation, and multi-currency support.
           </Typography>
-          <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" useFlexGap>
-            <Button
-              variant="contained"
-              size="large"
-              startIcon={<OpenInNewIcon />}
-              href={LIVE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                py: 1.8,
-                px: 5,
-                textTransform: 'none',
-                fontSize: '1.1rem',
-                fontWeight: 600,
-                background: 'linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%)',
-                borderRadius: 3,
-                boxShadow: '0 4px 20px rgba(108, 92, 231, 0.4)',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #00CEC9 0%, #6C5CE7 100%)',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 8px 30px rgba(108, 92, 231, 0.6)',
-                },
-              }}
-            >
-              Try it Live
-            </Button>
-          </Stack>
+          <ProjectLinks
+            liveUrl={LIVE_URL}
+            sourceUrl={repos.expenseSplitter}
+            gradient={accent}
+            gradientHover={accentHover}
+          />
         </Container>
       </Box>
 
@@ -302,6 +270,7 @@ const ExpenseSplitterLanding = () => {
         <Container maxWidth="lg">
           <Typography
             variant="h3"
+            component="h2"
             fontWeight={700}
             textAlign="center"
             sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
@@ -311,7 +280,7 @@ const ExpenseSplitterLanding = () => {
           <Typography
             variant="body1"
             textAlign="center"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 6, maxWidth: 500, mx: 'auto' }}
+            sx={{ color: text.muted, mb: 6, maxWidth: 500, mx: 'auto' }}
           >
             Everything you need to manage shared expenses without the spreadsheet headaches.
           </Typography>
@@ -334,10 +303,10 @@ const ExpenseSplitterLanding = () => {
                     }}>
                       {feature.icon}
                     </Box>
-                    <Typography variant="h6" fontWeight={600} sx={{ color: 'white', mb: 1 }}>
+                    <Typography variant="h6" component="h3" fontWeight={600} sx={{ color: text.primary, mb: 1 }}>
                       {feature.title}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.7 }}>
+                    <Typography variant="body2" sx={{ color: text.muted, lineHeight: 1.7 }}>
                       {feature.description}
                     </Typography>
                   </CardContent>
@@ -353,6 +322,7 @@ const ExpenseSplitterLanding = () => {
         <Container maxWidth="lg">
           <Typography
             variant="h3"
+            component="h2"
             fontWeight={700}
             textAlign="center"
             sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
@@ -362,7 +332,7 @@ const ExpenseSplitterLanding = () => {
           <Typography
             variant="body1"
             textAlign="center"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 6, maxWidth: 500, mx: 'auto' }}
+            sx={{ color: text.muted, mb: 6, maxWidth: 500, mx: 'auto' }}
           >
             Three simple steps to manage shared expenses.
           </Typography>
@@ -400,12 +370,12 @@ const ExpenseSplitterLanding = () => {
                     }}>
                       {index + 1}
                     </Box>
-                    <Box sx={{ color: 'rgba(255,255,255,0.7)' }}>{step.icon}</Box>
+                    <Box sx={{ color: text.secondary }}>{step.icon}</Box>
                   </Box>
-                  <Typography variant="h6" fontWeight={600} sx={{ color: 'white', mb: 1 }}>
+                  <Typography variant="h6" component="h3" fontWeight={600} sx={{ color: text.primary, mb: 1 }}>
                     {step.title}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, maxWidth: 280, mx: 'auto' }}>
+                  <Typography variant="body2" sx={{ color: text.muted, lineHeight: 1.7, maxWidth: 280, mx: 'auto' }}>
                     {step.description}
                   </Typography>
                 </Box>
@@ -415,11 +385,15 @@ const ExpenseSplitterLanding = () => {
         </Container>
       </Box>
 
+      {/* CASE STUDY */}
+      <CaseStudy study={caseStudies['expense-splitter']} gradient={accent} />
+
       {/* TECH STACK SECTION */}
       <Box sx={{ py: { xs: 6, md: 8 }, position: 'relative', zIndex: 1 }}>
         <Container maxWidth="md">
           <Typography
             variant="h3"
+            component="h2"
             fontWeight={700}
             textAlign="center"
             sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
@@ -429,7 +403,7 @@ const ExpenseSplitterLanding = () => {
           <Typography
             variant="body1"
             textAlign="center"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 5, maxWidth: 400, mx: 'auto' }}
+            sx={{ color: text.muted, mb: 5, maxWidth: 400, mx: 'auto' }}
           >
             Built with React and Firebase for real-time collaboration.
           </Typography>
@@ -467,54 +441,28 @@ const ExpenseSplitterLanding = () => {
         <Container maxWidth="sm">
           <Typography
             variant="h4"
+            component="h2"
             fontWeight={700}
-            sx={{ color: 'white', mb: 2, fontSize: { xs: '1.5rem', md: '2rem' } }}
+            sx={{ color: text.primary, mb: 2, fontSize: { xs: '1.5rem', md: '2rem' } }}
           >
             Ready to split some expenses?
           </Typography>
           <Typography
             variant="body1"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 4 }}
+            sx={{ color: text.muted, mb: 4 }}
           >
             Try the live app or explore the full codebase on GitHub.
           </Typography>
-          <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" useFlexGap>
-            <Button
-              variant="contained"
-              size="large"
-              startIcon={<OpenInNewIcon />}
-              href={LIVE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                py: 1.8,
-                px: 5,
-                textTransform: 'none',
-                fontSize: '1.1rem',
-                fontWeight: 600,
-                background: 'linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%)',
-                borderRadius: 3,
-                boxShadow: '0 4px 20px rgba(108, 92, 231, 0.4)',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #00CEC9 0%, #6C5CE7 100%)',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 8px 30px rgba(108, 92, 231, 0.6)',
-                },
-              }}
-            >
-              Try it Live
-            </Button>
-          </Stack>
-          <Typography
-            variant="caption"
-            display="block"
-            sx={{ color: 'rgba(255,255,255,0.3)', mt: 6, pb: 2 }}
-          >
-            Built with React, Firebase Auth, and Cloud Firestore.
-          </Typography>
+          <ProjectLinks
+            liveUrl={LIVE_URL}
+            sourceUrl={repos.expenseSplitter}
+            gradient={accent}
+            gradientHover={accentHover}
+          />
         </Container>
       </Box>
+
+      <SiteFooter note="Built with React, Firebase Auth, and Cloud Firestore." />
     </Box>
   );
 };

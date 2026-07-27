@@ -20,30 +20,20 @@ import {
   Edit as EditIcon,
   Visibility as ViewIcon,
   Send as SendIcon,
-  OpenInNew as OpenInNewIcon,
   ArrowBack as BackIcon,
+  Verified as TestedIcon,
 } from '@mui/icons-material';
+import CaseStudy from './CaseStudy';
+import ProjectLinks from './ProjectLinks';
+import SiteFooter from './SiteFooter';
+import { caseStudies } from '../data/caseStudies';
+import { repos } from '../data/profile';
+import { glassCard, gradientText as makeGradientText, text, focusRing } from '../styles/shared';
 
-const glassCard = {
-  background: 'rgba(255, 255, 255, 0.05)',
-  backdropFilter: 'blur(10px)',
-  border: '1px solid rgba(255, 255, 255, 0.1)',
-  borderRadius: 3,
-  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-  transition: 'all 0.3s ease',
-  '&:hover': {
-    background: 'rgba(255, 255, 255, 0.08)',
-    transform: 'translateY(-4px)',
-    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4)',
-  },
-};
+const accent = 'linear-gradient(135deg, #0077A8 0%, #F5D78E 100%)';
+const accentHover = 'linear-gradient(135deg, #F5D78E 0%, #0077A8 100%)';
 
-const gradientText = {
-  background: 'linear-gradient(135deg, #0077A8 0%, #F5D78E 100%)',
-  backgroundClip: 'text',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-};
+const gradientText = makeGradientText(accent);
 
 const features = [
   {
@@ -231,9 +221,10 @@ const OOOGeneratorLanding = () => {
               position: 'absolute',
               top: { xs: -40, md: -60 },
               left: 0,
-              color: 'rgba(255,255,255,0.5)',
+              color: text.muted,
               textTransform: 'none',
-              '&:hover': { color: 'rgba(255,255,255,0.8)' },
+              '&:hover': { color: text.primary },
+              ...focusRing,
             }}
           >
             All Projects
@@ -254,7 +245,7 @@ const OOOGeneratorLanding = () => {
           <Typography
             variant="h5"
             sx={{
-              color: 'rgba(255, 255, 255, 0.7)',
+              color: text.secondary,
               maxWidth: 600,
               mx: 'auto',
               mb: 5,
@@ -266,34 +257,25 @@ const OOOGeneratorLanding = () => {
             A pixel art-styled Out of Office message generator.
             Pick a tone, fill in the details, and copy a ready-to-use auto-reply in seconds.
           </Typography>
-          <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" useFlexGap>
-            <Button
-              variant="contained"
-              size="large"
-              startIcon={<OpenInNewIcon />}
-              href={LIVE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+          <Stack alignItems="center" spacing={3}>
+            <Chip
+              icon={<TestedIcon />}
+              label={`Tested · ${caseStudies['ooo-generator'].tested.framework}`}
               sx={{
-                py: 1.8,
-                px: 5,
-                textTransform: 'none',
-                fontSize: '1.1rem',
-                fontWeight: 600,
-                background: 'linear-gradient(135deg, #0077A8 0%, #F5D78E 100%)',
-                borderRadius: 3,
-                boxShadow: '0 4px 20px rgba(0, 119, 168, 0.4)',
-                color: '#0a0e27',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #F5D78E 0%, #0077A8 100%)',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 8px 30px rgba(0, 119, 168, 0.6)',
-                },
+                fontWeight: 700,
+                background: 'rgba(67, 233, 123, 0.14)',
+                border: '1px solid rgba(67, 233, 123, 0.45)',
+                color: '#7ef0a8',
+                '& .MuiChip-icon': { color: '#7ef0a8' },
               }}
-            >
-              Try it Live
-            </Button>
+            />
+            <ProjectLinks
+              liveUrl={LIVE_URL}
+              sourceUrl={repos.oooGenerator}
+              gradient={accent}
+              gradientHover={accentHover}
+              contrastText="#0a0e27"
+            />
           </Stack>
         </Container>
       </Box>
@@ -303,6 +285,7 @@ const OOOGeneratorLanding = () => {
         <Container maxWidth="lg">
           <Typography
             variant="h3"
+            component="h2"
             fontWeight={700}
             textAlign="center"
             sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
@@ -312,7 +295,7 @@ const OOOGeneratorLanding = () => {
           <Typography
             variant="body1"
             textAlign="center"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 6, maxWidth: 500, mx: 'auto' }}
+            sx={{ color: text.muted, mb: 6, maxWidth: 500, mx: 'auto' }}
           >
             Generate the perfect out-of-office reply with a retro twist.
           </Typography>
@@ -335,10 +318,10 @@ const OOOGeneratorLanding = () => {
                     }}>
                       {feature.icon}
                     </Box>
-                    <Typography variant="h6" fontWeight={600} sx={{ color: 'white', mb: 1 }}>
+                    <Typography variant="h6" component="h3" fontWeight={600} sx={{ color: text.primary, mb: 1 }}>
                       {feature.title}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.7 }}>
+                    <Typography variant="body2" sx={{ color: text.muted, lineHeight: 1.7 }}>
                       {feature.description}
                     </Typography>
                   </CardContent>
@@ -354,6 +337,7 @@ const OOOGeneratorLanding = () => {
         <Container maxWidth="lg">
           <Typography
             variant="h3"
+            component="h2"
             fontWeight={700}
             textAlign="center"
             sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
@@ -363,7 +347,7 @@ const OOOGeneratorLanding = () => {
           <Typography
             variant="body1"
             textAlign="center"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 6, maxWidth: 500, mx: 'auto' }}
+            sx={{ color: text.muted, mb: 6, maxWidth: 500, mx: 'auto' }}
           >
             Three steps to OOO freedom.
           </Typography>
@@ -401,12 +385,12 @@ const OOOGeneratorLanding = () => {
                     }}>
                       {index + 1}
                     </Box>
-                    <Box sx={{ color: 'rgba(255,255,255,0.7)' }}>{step.icon}</Box>
+                    <Box sx={{ color: text.secondary }}>{step.icon}</Box>
                   </Box>
-                  <Typography variant="h6" fontWeight={600} sx={{ color: 'white', mb: 1 }}>
+                  <Typography variant="h6" component="h3" fontWeight={600} sx={{ color: text.primary, mb: 1 }}>
                     {step.title}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, maxWidth: 280, mx: 'auto' }}>
+                  <Typography variant="body2" sx={{ color: text.muted, lineHeight: 1.7, maxWidth: 280, mx: 'auto' }}>
                     {step.description}
                   </Typography>
                 </Box>
@@ -416,11 +400,15 @@ const OOOGeneratorLanding = () => {
         </Container>
       </Box>
 
+      {/* CASE STUDY */}
+      <CaseStudy study={caseStudies['ooo-generator']} gradient={accent} />
+
       {/* TECH STACK SECTION */}
       <Box sx={{ py: { xs: 6, md: 8 }, position: 'relative', zIndex: 1 }}>
         <Container maxWidth="md">
           <Typography
             variant="h3"
+            component="h2"
             fontWeight={700}
             textAlign="center"
             sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
@@ -430,7 +418,7 @@ const OOOGeneratorLanding = () => {
           <Typography
             variant="body1"
             textAlign="center"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 5, maxWidth: 400, mx: 'auto' }}
+            sx={{ color: text.muted, mb: 5, maxWidth: 400, mx: 'auto' }}
           >
             Built with Next.js, TypeScript, and Tailwind for a modern retro experience.
           </Typography>
@@ -475,48 +463,21 @@ const OOOGeneratorLanding = () => {
           </Typography>
           <Typography
             variant="body1"
-            sx={{ color: 'rgba(255,255,255,0.5)', mb: 4 }}
+            sx={{ color: text.muted, mb: 4 }}
           >
             Try the live app or explore the codebase on GitHub.
           </Typography>
-          <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" useFlexGap>
-            <Button
-              variant="contained"
-              size="large"
-              startIcon={<OpenInNewIcon />}
-              href={LIVE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                py: 1.8,
-                px: 5,
-                textTransform: 'none',
-                fontSize: '1.1rem',
-                fontWeight: 600,
-                background: 'linear-gradient(135deg, #0077A8 0%, #F5D78E 100%)',
-                borderRadius: 3,
-                color: '#0a0e27',
-                boxShadow: '0 4px 20px rgba(0, 119, 168, 0.4)',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #F5D78E 0%, #0077A8 100%)',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 8px 30px rgba(0, 119, 168, 0.6)',
-                },
-              }}
-            >
-              Try it Live
-            </Button>
-          </Stack>
-          <Typography
-            variant="caption"
-            display="block"
-            sx={{ color: 'rgba(255,255,255,0.3)', mt: 6, pb: 2 }}
-          >
-            Built with Next.js 16, TypeScript, Tailwind CSS, and Web Audio API.
-          </Typography>
+          <ProjectLinks
+            liveUrl={LIVE_URL}
+            sourceUrl={repos.oooGenerator}
+            gradient={accent}
+            gradientHover={accentHover}
+            contrastText="#0a0e27"
+          />
         </Container>
       </Box>
+
+      <SiteFooter note="Built with Next.js 16, TypeScript, Tailwind CSS, and the Web Audio API." />
     </Box>
   );
 };

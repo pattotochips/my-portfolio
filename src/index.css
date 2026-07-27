@@ -12,3 +12,26 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Anchor for the skip link, so keyboard users land on content rather than
+   somewhere the browser has to guess at. */
+#main:focus {
+  outline: none;
+}
+
+/*
+  The landing pages use decorative floating and pulsing background animations.
+  None of them convey information, so honour the OS "reduce motion" setting
+  instead of animating regardless. Kept as one global sweep rather than a
+  per-keyframe opt-out so new decoration is covered by default.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
