@@ -41,6 +41,20 @@ const publicBase = import.meta.env.BASE_URL;
 
 const brandGradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
 
+/**
+ * What kind of thing each project is. Every card carries one so the grid can be
+ * scanned by discipline rather than read end to end. Colours are deliberately
+ * distinct from the green used by the Live demo and Tested status chips.
+ */
+const KINDS = {
+  Backend: '#26a69a',
+  Frontend: '#42a5f5',
+  'Full-stack': '#ab47bc',
+  Extension: '#ffa726',
+  Desktop: '#ec407a',
+  Bot: '#7986cb',
+};
+
 const projects = [
   {
     id: 'face-filter',
@@ -52,6 +66,7 @@ const projects = [
     gradient: brandGradient,
     route: '/face-filter',
     repo: repos.faceFilter,
+    badge: 'Frontend',
     hasDemo: true,
   },
   {
@@ -64,6 +79,7 @@ const projects = [
     gradient: 'linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%)',
     route: '/expense-splitter',
     repo: repos.expenseSplitter,
+    badge: 'Full-stack',
     hasDemo: true,
   },
   {
@@ -76,6 +92,7 @@ const projects = [
     gradient: 'linear-gradient(135deg, #0077A8 0%, #F5D78E 100%)',
     route: '/ooo-generator',
     repo: repos.oooGenerator,
+    badge: 'Frontend',
     hasDemo: true,
     tested: 'Jest + RTL',
   },
@@ -89,6 +106,7 @@ const projects = [
     gradient: 'linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%)',
     route: '/birthday-bot',
     repo: repos.birthdayBot,
+    badge: 'Bot',
   },
   {
     id: 'hr-query-engine',
@@ -207,7 +225,7 @@ const PortfolioHome = () => {
       >
         <Container maxWidth="md">
           <Avatar
-            src={publicBase + profile.avatar}
+            src={publicBase + profile.portrait}
             alt={`Portrait of ${profile.name}`}
             sx={{
               width: { xs: 96, md: 120 },
@@ -422,9 +440,9 @@ const PortfolioHome = () => {
                                 fontSize: '0.7rem',
                                 fontWeight: 700,
                                 letterSpacing: '0.03em',
-                                background: 'rgba(144, 202, 249, 0.16)',
-                                border: '1px solid rgba(144, 202, 249, 0.45)',
-                                color: '#bbdefb',
+                                background: `${KINDS[project.badge]}26`,
+                                border: `1px solid ${KINDS[project.badge]}80`,
+                                color: KINDS[project.badge],
                               }}
                             />
                           )}

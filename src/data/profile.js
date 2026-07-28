@@ -6,16 +6,19 @@
 export const profile = {
   name: 'Prabhat Kumar Singh',
   role: 'Full-Stack Software Engineer',
-  tagline: '8+ years building data-driven web applications — React & TypeScript on the front, Java, Spring Boot and Node.js behind it.',
+  tagline: '8+ years building data-driven web applications, from the React interfaces people use down to the Java, Spring Boot, and Node.js services behind them.',
   location: 'Noida, India',
   email: 'prabhatkumarsingh336@gmail.com',
   linkedin: 'https://www.linkedin.com/in/prabhat-singh-1394n/',
   github: 'https://github.com/pattotochips',
   resume: 'Prabhat_Kumar_Singh_Resume.pdf',
+  portrait: 'portrait.webp',
+  // avatar.png is kept for the favicon — a face is unreadable at 16px.
   avatar: 'avatar.png',
   about: [
-    'I build and maintain complex, data-driven web applications end to end. Most of my time goes into modern React and UI architecture, but I have shipped plenty of backend too — Java, Spring Boot and Node.js REST APIs that serve both web and mobile clients.',
-    'A lot of my work has been modernization: taking large legacy codebases, adding a testing story, migrating them onto current stacks, and making them faster without breaking the things people depend on. Along the way I have mentored engineers, owned features from design through release, and been the person the team routes hard debugging to.',
+    "I work across the full stack, though React and UI architecture are where I spend most of my time. The rest goes into the services underneath: Java and Spring Boot, Node.js REST APIs, and the data models they sit on. Having built both sides makes it much easier to design an API the front end actually wants to use.",
+    "Much of my career has been modernization work \u2014 moving large, long-lived codebases onto current stacks without breaking the things people rely on. In practice that means adding tests where there weren't any, untangling old UI layers, and tracking down performance problems that had been there for years.",
+    "Along the way I've mentored engineers, owned features from first design through release, and become the person a team hands its hardest bugs to. I'm at my best on the awkward problems where the answer isn't obvious yet.",
   ],
 };
 
