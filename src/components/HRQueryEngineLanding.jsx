@@ -23,7 +23,6 @@ import {
 import CaseStudy from './CaseStudy';
 import ProjectLinks from './ProjectLinks';
 import SiteFooter from './SiteFooter';
-import MediaSlot from './MediaSlot';
 import PipelineDiagram from './PipelineDiagram';
 import { caseStudies } from '../data/caseStudies';
 import { repos } from '../data/profile';
@@ -371,27 +370,6 @@ const HRQueryEngineLanding = () => {
               </Typography>
             </CardContent>
           </Card>
-        </Container>
-      </Box>
-
-      {/* SCREENSHOT SLOT */}
-      <Box component="section" aria-labelledby="ui-heading" sx={{ py: { xs: 6, md: 8 } }}>
-        <Container maxWidth="lg">
-          <Typography
-            id="ui-heading"
-            variant="h3"
-            component="h2"
-            fontWeight={700}
-            textAlign="center"
-            sx={{ ...gradientText, mb: 4, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
-          >
-            The client
-          </Typography>
-          <MediaSlot
-            file="hr-query-engine-search.png"
-            caption="Search interface with natural-language query and ranked results"
-            gradient={accent}
-          />
         </Container>
       </Box>
 

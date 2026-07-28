@@ -25,7 +25,6 @@ import {
 import CaseStudy from './CaseStudy';
 import ProjectLinks from './ProjectLinks';
 import SiteFooter from './SiteFooter';
-import MediaSlot from './MediaSlot';
 import { caseStudies } from '../data/caseStudies';
 import { repos } from '../data/profile';
 import { glassCard, gradientText as makeGradientText, text, focusRing } from '../styles/shared';
@@ -426,55 +425,6 @@ const DemoLanding = () => {
               </Grid>
             ))}
           </Grid>
-        </Container>
-      </Box>
-
-      {/* DEMO MEDIA */}
-      <Box component="section" aria-labelledby="media-heading" sx={{ py: { xs: 6, md: 8 }, position: 'relative', zIndex: 1 }}>
-        <Container maxWidth="lg">
-          <Typography
-            id="media-heading"
-            variant="h3"
-            component="h2"
-            fontWeight={700}
-            textAlign="center"
-            sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
-          >
-            See it running
-          </Typography>
-          <Typography
-            variant="body1"
-            textAlign="center"
-            sx={{ color: text.muted, mb: 5, maxWidth: 560, mx: 'auto', lineHeight: 1.8 }}
-          >
-            The live demo needs camera permission, so here is what it looks like first.
-          </Typography>
-          <Stack spacing={3} alignItems="center">
-            <MediaSlot
-              file="face-filter-santa.gif"
-              caption="Santa hat and beard tracking a face in real time"
-              gradient={accent}
-              maxWidth={760}
-            />
-            <Grid container spacing={3}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <MediaSlot
-                  file="face-filter-game.gif"
-                  caption="Hand-gesture game mode picking a winner"
-                  gradient={accent}
-                  maxWidth="100%"
-                />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <MediaSlot
-                  file="face-filter-settings.png"
-                  caption="Operator console — filters, snow, ads and the sequencer"
-                  gradient={accent}
-                  maxWidth="100%"
-                />
-              </Grid>
-            </Grid>
-          </Stack>
         </Container>
       </Box>
 

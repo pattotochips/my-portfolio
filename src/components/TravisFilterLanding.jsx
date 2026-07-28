@@ -23,7 +23,6 @@ import {
 import CaseStudy from './CaseStudy';
 import ProjectLinks from './ProjectLinks';
 import SiteFooter from './SiteFooter';
-import MediaSlot from './MediaSlot';
 import { caseStudies } from '../data/caseStudies';
 import { repos } from '../data/profile';
 import { glassCard, gradientText as makeGradientText, pageBackground, text, focusRing } from '../styles/shared';
@@ -193,42 +192,6 @@ const TravisFilterLanding = () => {
               note="A desktop OpenCV app needs a local webcam and a display window, so it cannot run in a browser."
             />
           </Stack>
-        </Container>
-      </Box>
-
-      {/* DEMO SLOTS */}
-      <Box component="section" aria-labelledby="demo-heading" sx={{ py: { xs: 6, md: 8 } }}>
-        <Container maxWidth="lg">
-          <Typography
-            id="demo-heading"
-            variant="h3"
-            component="h2"
-            fontWeight={700}
-            textAlign="center"
-            sx={{ ...gradientText, mb: 5, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
-          >
-            Both modes
-          </Typography>
-          <Grid container spacing={3}>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <MediaSlot
-                file="travis-filter-stripes.gif"
-                caption="Mode 0 — tinted silhouette over animated stripes"
-                gradient={accent}
-                aspect="16 / 9"
-                maxWidth="100%"
-              />
-            </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <MediaSlot
-                file="travis-filter-infrared.gif"
-                caption="Mode 1 — infrared-style white silhouette on black"
-                gradient={accent}
-                aspect="16 / 9"
-                maxWidth="100%"
-              />
-            </Grid>
-          </Grid>
         </Container>
       </Box>
 

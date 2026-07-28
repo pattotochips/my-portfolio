@@ -24,7 +24,6 @@ import {
 import CaseStudy from './CaseStudy';
 import ProjectLinks from './ProjectLinks';
 import SiteFooter from './SiteFooter';
-import MediaSlot from './MediaSlot';
 import { caseStudies } from '../data/caseStudies';
 import { repos } from '../data/profile';
 import { glassCard, gradientText as makeGradientText, pageBackground, text, focusRing } from '../styles/shared';
@@ -196,43 +195,6 @@ const WikiTrailLanding = () => {
               gradientHover={accentHover}
               contrastText="#141833"
               note="A real exported trail — Coffee → Battle of Waterloo. Drag nodes, scroll to zoom, click to inspect. No extension needed."
-            />
-          </Stack>
-        </Container>
-      </Box>
-
-      {/* GRAPH SCREENSHOT */}
-      <Box component="section" aria-labelledby="graph-heading" sx={{ py: { xs: 6, md: 8 } }}>
-        <Container maxWidth="lg">
-          <Typography
-            id="graph-heading"
-            variant="h3"
-            component="h2"
-            fontWeight={700}
-            textAlign="center"
-            sx={{ ...gradientText, mb: 2, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
-          >
-            A trail, mapped
-          </Typography>
-          <Typography
-            variant="body1"
-            textAlign="center"
-            sx={{ color: text.muted, mb: 5, maxWidth: 560, mx: 'auto', lineHeight: 1.8 }}
-          >
-            Coffee to the Battle of Waterloo in fourteen articles. Node size is time spent; the gold
-            dots are annotations.
-          </Typography>
-          <Stack spacing={3} alignItems="center">
-            <MediaSlot
-              file="wikitrail-graph.png"
-              caption="Dashboard — session sidebar, force-directed graph, article detail panel"
-              gradient={accent}
-            />
-            <MediaSlot
-              file="wikitrail-trail.gif"
-              caption="Building a trail live while browsing Wikipedia"
-              gradient={accent}
-              maxWidth={720}
             />
           </Stack>
         </Container>

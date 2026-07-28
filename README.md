@@ -84,55 +84,38 @@ The face filter app is reachable at `/face-filter/app`. It sits behind a simple 
 
 ```
 src/
-├── App.jsx                     # Router, theme, lazy route definitions, skip link
+├── App.jsx                        # Router, theme, lazy route definitions, skip link
+├── main.jsx                       # React root
+├── index.css                      # Reset, reduced-motion sweep, skip-link target
 ├── data/
-│   ├── profile.js              # Identity, contact, skills, experience, education
-│   └── caseStudies.js          # Case study copy for all four projects
+│   ├── profile.js                 # Identity, contact, skills, experience, education, repo URLs
+│   └── caseStudies.js             # Case study copy for all eight projects
 ├── styles/
-│   └── shared.js               # Colour tokens, glass card, gradient text, focus ring
+│   └── shared.js                  # Colour tokens, glass card, gradient text, focus ring
 └── components/
-    ├── PortfolioHome.jsx       # Home: hero, projects, about, skills, experience, education
-    ├── CaseStudy.jsx           # Reusable problem/approach/trade-offs/next section
-    ├── ProjectLinks.jsx        # Paired live-demo / view-source buttons
-    ├── SiteFooter.jsx          # Contact links, shown on every page
-    ├── DemoLanding.jsx         # Face Filter landing page
+    ├── PortfolioHome.jsx          # Home: hero, project grid, about, skills, experience, education
+    ├── CaseStudy.jsx              # Problem / approach / trade-offs / next, plus the no-demo note
+    ├── ProjectLinks.jsx           # Paired live-demo and view-source buttons
+    ├── PipelineDiagram.jsx        # Request-pipeline diagram (HR Query Engine)
+    ├── SiteFooter.jsx             # Contact links, shown on every page
+    │
+    ├── HRQueryEngineLanding.jsx   # Project landing pages
+    ├── DemoLanding.jsx            #   Face Filter (+ DeepAR as a related experiment)
+    ├── WikiTrailLanding.jsx
+    ├── InkmarkLanding.jsx
     ├── ExpenseSplitterLanding.jsx
     ├── OOOGeneratorLanding.jsx
+    ├── TravisFilterLanding.jsx
     ├── BirthdayBotLanding.jsx
-    ├── FaceFilterApp.jsx       # Face filter app shell (lazy-loaded)
-    ├── Login.jsx               # Gate for the face filter app
-    ├── MenuSettings.jsx        # Operator console for filters, ads, game, sequencing
-    └── VideoScreen.jsx         # Camera capture, MediaPipe inference, canvas rendering
+    │
+    ├── FaceFilterApp.jsx          # Face filter app shell (lazy-loaded)
+    ├── Login.jsx                  # Gate for the face filter app
+    ├── MenuSettings.jsx           # Operator console for filters, ads, game, sequencing
+    └── VideoScreen.jsx            # Camera capture, MediaPipe inference, canvas rendering
 ```
 
 `profile.js` and `caseStudies.js` are the content layer — updating a job, a skill, or a case study
 means editing data, not components.
-
----
-
-## Pending media
-
-Screenshots and GIFs are wired up but not yet captured. Each slot renders a labelled dashed frame at
-the correct aspect ratio; drop the file into `public/media/` and set `ready` on that `MediaSlot` to
-go live. Nothing else needs to change — sizing, lazy-loading and alt text are already in place.
-
-| File | Page | Shows |
-|---|---|---|
-| `face-filter-santa.gif` | Face Filter | Santa hat and beard tracking a face live |
-| `face-filter-game.gif` | Face Filter | Hand-gesture game picking a winner |
-| `face-filter-settings.png` | Face Filter | Operator console and sequencer |
-| `hr-query-engine-search.png` | HR Query Engine | Search UI with query and ranked results |
-| `wikitrail-graph.png` | WikiTrail | Dashboard — sidebar, graph, detail panel |
-| `wikitrail-trail.gif` | WikiTrail | A trail building while browsing |
-| `inkmark-highlight.gif` | Inkmark | Selecting text and picking a colour |
-| `inkmark-dashboard.png` | Inkmark | Highlights grouped by site, with search |
-| `travis-filter-stripes.gif` | Travis Filter | Mode 0 — tinted silhouette over stripes |
-| `travis-filter-infrared.gif` | Travis Filter | Mode 1 — infrared silhouette |
-| `expense-splitter-groups.png` | Expense Splitter | Group view with expenses and balances |
-| `expense-splitter-balance.png` | Expense Splitter | Settle-up balances across members |
-| `ooo-generator-app.png` | OOO Generator | Generator with live preview |
-| `ooo-generator-tones.gif` | OOO Generator | Switching tone, message restructures |
-| `birthday-bot-discord.png` | Birthday Bot | Adding a reminder and the announcement |
 
 ---
 

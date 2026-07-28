@@ -23,7 +23,6 @@ import {
 import CaseStudy from './CaseStudy';
 import ProjectLinks from './ProjectLinks';
 import SiteFooter from './SiteFooter';
-import MediaSlot from './MediaSlot';
 import { caseStudies } from '../data/caseStudies';
 import { repos } from '../data/profile';
 import { glassCard, gradientText as makeGradientText, pageBackground, text, focusRing } from '../styles/shared';
@@ -209,35 +208,6 @@ const InkmarkLanding = () => {
               gradientHover={accentHover}
               contrastText="#3b2a12"
               note="Install with Load Unpacked in Chrome, Edge or Brave, or as a temporary add-on in Firefox. Safari needs the Xcode converter."
-            />
-          </Stack>
-        </Container>
-      </Box>
-
-      {/* SCREENSHOTS */}
-      <Box component="section" aria-labelledby="shots-heading" sx={{ py: { xs: 6, md: 8 } }}>
-        <Container maxWidth="lg">
-          <Typography
-            id="shots-heading"
-            variant="h3"
-            component="h2"
-            fontWeight={700}
-            textAlign="center"
-            sx={{ ...gradientText, mb: 5, fontSize: { xs: '1.8rem', md: '2.5rem' } }}
-          >
-            In use
-          </Typography>
-          <Stack spacing={3} alignItems="center">
-            <MediaSlot
-              file="inkmark-highlight.gif"
-              caption="Selecting text and picking a colour from the tooltip"
-              gradient={accent}
-              maxWidth={720}
-            />
-            <MediaSlot
-              file="inkmark-dashboard.png"
-              caption="Dashboard — highlights grouped by site, with search"
-              gradient={accent}
             />
           </Stack>
         </Container>
